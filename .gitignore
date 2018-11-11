@@ -1,1 +1,7 @@
 .idea/
+samples
+Data/*
+CoreData/*
+Autoload/*
+tool/*
+Urho3DPlayer
