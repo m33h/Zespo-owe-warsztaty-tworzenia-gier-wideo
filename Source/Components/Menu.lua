@@ -1,11 +1,7 @@
 local window = nil
 
 Application = {}
-function Application:new()
-    classVariables = {}
-    self.__index = self
-    return setmetatable(classVariables, self)
-end
+require "Source/Components/Application"
 
 function Application:InitializeMenu()
     input.mouseVisible = true
@@ -18,26 +14,10 @@ end
 function InitWindow()
     window = Window:new()
     ui.root:AddChild(window)
-
     window.minWidth = 384
     window:SetLayout(LM_VERTICAL, 6, IntRect(6, 6, 6, 6))
     window:SetAlignment(HA_CENTER, VA_CENTER)
     window:SetName("Window")
-
-    local titleBar = UIElement:new()
-    titleBar:SetMinSize(0, 24)
-    titleBar.verticalAlignment = VA_TOP
-    titleBar.layoutMode = LM_HORIZONTAL
-
-    local windowTitle = Text:new()
-    windowTitle.name = "New game"
-
-    titleBar:AddChild(windowTitle)
-
-    window:AddChild(titleBar)
-
-    window:SetStyleAuto()
-    windowTitle:SetStyleAuto()
 end
 
 
@@ -75,5 +55,7 @@ end
 
 function HandlePlayButton()
     input.mouseVisible = false
-    engine:Exit()
+    ui.root:GetChild("ExitButton", true).visible = false
+    ui.root:GetChild("PlayButton", true).visible = false
+    ui.root:GetChild("Window", true).visible = false
 end
