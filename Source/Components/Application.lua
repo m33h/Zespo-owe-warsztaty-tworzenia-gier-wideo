@@ -1,7 +1,14 @@
+require "Source/Components/Debug"
+
 function Application:new()
-    classVariables = {}
+    classVariables = { state = 'GAME_MENU' }
     self.__index = self
+    self.subscribeToEvents()
     return setmetatable(classVariables, self)
+end
+
+function Application:subscribeToEvents()
+--    todo
 end
 
 function Application:CreateScene()

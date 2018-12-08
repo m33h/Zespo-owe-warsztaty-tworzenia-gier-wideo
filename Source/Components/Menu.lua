@@ -1,3 +1,5 @@
+require "Source/Components/Debug"
+
 local window = nil
 
 Application = {}
@@ -18,6 +20,7 @@ function InitWindow()
     window:SetLayout(LM_VERTICAL, 6, IntRect(6, 6, 6, 6))
     window:SetAlignment(HA_CENTER, VA_CENTER)
     window:SetName("Window")
+    window:SetResizable(true)
 end
 
 
@@ -58,4 +61,5 @@ function HandlePlayButton()
     ui.root:GetChild("ExitButton", true).visible = false
     ui.root:GetChild("PlayButton", true).visible = false
     ui.root:GetChild("Window", true).visible = false
+    application['state'] = 'PLAY_GAME'
 end

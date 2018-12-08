@@ -14,3 +14,6 @@ https://urho3d.github.io/documentation/1.7/_building.html
 3. Move samples directory to repository root
 
 4. Check if ./Urho3DPlayer samples/01_HelloWorld.lua works
+
+### Install required dependencies with luarocks
+luarocks install debugger
