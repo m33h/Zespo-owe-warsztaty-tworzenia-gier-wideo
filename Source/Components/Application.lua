@@ -33,17 +33,14 @@ function Application:CreateScene()
     light.shadowCascade = CascadeParameters(10.0, 50.0, 200.0, 0.0, 0.8)
     light.specularIntensity = 0.5
 
-    -- Create heightmap terrain with collision
     local terrainNode = scene_:CreateChild("Terrain")
     terrainNode.position = Vector3(0.0, 0.0, 0.0)
     local terrain = terrainNode:CreateComponent("Terrain")
     terrain.patchSize = 64
-    terrain.spacing = Vector3(2.0, 0.1, 2.0) -- Spacing between vertices and vertical resolution of the height map
+    terrain.spacing = Vector3(0, 0, 0) -- our map is flat
     terrain.smoothing = true
     terrain.heightMap = cache:GetResource("Image", "Textures/HeightMap.png")
     terrain.material = cache:GetResource("Material", "Materials/Terrain.xml")
-    -- The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
-    -- terrain patches and other objects behind it
     terrain.occluder = true
 
     local shape = terrainNode:CreateComponent("CollisionShape")
@@ -65,18 +62,6 @@ function CreateViewport()
     lightNode.direction = Vector3(0.6, -1.0, 0.8) -- The direction vector does not need to be normalized
     local light = lightNode:CreateComponent("Light")
     light.lightType = LIGHT_DIRECTIONAL
-
-    local NUM_OBJECTS = 200
-    for i = 1, NUM_OBJECTS do
-        local mushroomNode = scene_:CreateChild("Mushroom")
-        mushroomNode.position = Vector3(Random(90.0) - 45.0, 0.0, Random(90.0) - 45.0)
-        mushroomNode.rotation = Quaternion(0.0, Random(360.0), 0.0)
-        mushroomNode:SetScale(0.5 + Random(2.0))
-        local mushroomObject = mushroomNode:CreateComponent("StaticModel")
-        mushroomObject.model = cache:GetResource("Model", "Models/Mushroom.mdl")
-        mushroomObject.material = cache:GetResource("Material", "Materials/Mushroom.xml")
-        cameraNode.position = Vector3(0.0, 5.0, 0.0)
-    end
 end
 
 function MoveCamera(timeStep)
@@ -110,6 +95,11 @@ function HandleUpdate(eventType, eventData)
     if(application.state == 'PLAY_GAME') then
         MoveCamera(timeStep)
     end
-
-
+    if input:GetKeyDown(KEY_ESCAPE) then
+        input.mouseVisible = true
+        ui.root:GetChild("ExitButton", true).visible = true
+        ui.root:GetChild("ResumeButton", true).visible = true
+        ui.root:GetChild("Window", true).visible = true
+        application['state'] = 'GAME_MENU'
+    end
 end

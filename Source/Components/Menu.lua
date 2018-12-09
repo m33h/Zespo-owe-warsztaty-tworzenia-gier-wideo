@@ -50,6 +50,21 @@ function InitControls()
     playText:SetFont(font, 24)
     playText.text = "PLAY"
     SubscribeToEvent(playButton, "Released", "HandlePlayButton")
+
+    local resumeButton = ui.root:CreateChild("Button", "ResumeButton")
+    resumeButton:SetStyleAuto()
+    resumeButton.focusMode = FM_RESETFOCUS
+    resumeButton:SetSize(400, 50)
+    resumeButton:SetAlignment(HA_CENTER, VA_CENTER)
+    resumeButton:SetPosition(0, -50)
+    local resumeText = resumeButton:CreateChild("Text", "ResumeText")
+    resumeText:SetAlignment(HA_CENTER, VA_CENTER)
+    resumeText:SetFont(font, 24)
+    resumeText.text = "Resume"
+
+    resumeButton.visible = false
+
+    SubscribeToEvent(resumeButton, "Released", "HandleResumeButton")
 end
 
 function HandleExitButton()
@@ -63,4 +78,12 @@ function HandlePlayButton()
     ui.root:GetChild("Window", true).visible = false
     application['state'] = 'PLAY_GAME'
     Application:PlayGame()
+end
+
+function HandleResumeButton()
+    input.mouseVisible = false
+    ui.root:GetChild("ExitButton", true).visible = false
+    ui.root:GetChild("ResumeButton", true).visible = false
+    ui.root:GetChild("Window", true).visible = false
+    application['state'] = 'PLAY_GAME'
 end
