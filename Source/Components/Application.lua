@@ -8,7 +8,7 @@ function Application:new()
 end
 
 function Application:subscribeToEvents()
---    todo
+    SubscribeToEvent("Update", "HandleUpdate")
 end
 
 function Application:CreateScene()
@@ -48,4 +48,56 @@ function Application:CreateScene()
 
     local shape = terrainNode:CreateComponent("CollisionShape")
     shape:SetTerrain()
+end
+
+function Application:PlayGame()
+    CreateViewport()
+end
+
+function CreateViewport()
+    scene_:CreateComponent("Octree")
+    local planeNode = scene_:CreateChild("Plane")
+    planeNode.scale = Vector3(100.0, 1.0, 100.0)
+    local planeObject = planeNode:CreateComponent("StaticModel")
+    planeObject.model = cache:GetResource("Model", "Models/Plane.mdl")
+    planeObject.material = cache:GetResource("Material", "Materials/StoneTiled.xml")
+    local lightNode = scene_:CreateChild("DirectionalLight")
+    lightNode.direction = Vector3(0.6, -1.0, 0.8) -- The direction vector does not need to be normalized
+    local light = lightNode:CreateComponent("Light")
+    light.lightType = LIGHT_DIRECTIONAL
+
+    local NUM_OBJECTS = 200
+    for i = 1, NUM_OBJECTS do
+        local mushroomNode = scene_:CreateChild("Mushroom")
+        mushroomNode.position = Vector3(Random(90.0) - 45.0, 0.0, Random(90.0) - 45.0)
+        mushroomNode.rotation = Quaternion(0.0, Random(360.0), 0.0)
+        mushroomNode:SetScale(0.5 + Random(2.0))
+        local mushroomObject = mushroomNode:CreateComponent("StaticModel")
+        mushroomObject.model = cache:GetResource("Model", "Models/Mushroom.mdl")
+        mushroomObject.material = cache:GetResource("Material", "Materials/Mushroom.xml")
+        cameraNode.position = Vector3(0.0, 5.0, 0.0)
+    end
+end
+
+function MoveCamera(timeStep)
+    local MOVE_SPEED = 20.0
+
+    if input:GetKeyDown(KEY_W) then
+        cameraNode:Translate(Vector3(0.0, 0.0, 1.0) * MOVE_SPEED * timeStep)
+    end
+    if input:GetKeyDown(KEY_S) then
+        cameraNode:Translate(Vector3(0.0, 0.0, -1.0) * MOVE_SPEED * timeStep)
+    end
+    if input:GetKeyDown(KEY_A) then
+        cameraNode:Translate(Vector3(-1.0, 0.0, 0.0) * MOVE_SPEED * timeStep)
+    end
+    if input:GetKeyDown(KEY_D) then
+        cameraNode:Translate(Vector3(1.0, 0.0, 0.0) * MOVE_SPEED * timeStep)
+    end
+end
+
+-- todo: move this to Application class
+function HandleUpdate(eventType, eventData)
+    local timeStep = eventData["TimeStep"]:GetFloat()
+    MoveCamera(timeStep)
 end

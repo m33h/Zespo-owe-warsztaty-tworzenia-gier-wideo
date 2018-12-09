@@ -62,4 +62,5 @@ function HandlePlayButton()
     ui.root:GetChild("PlayButton", true).visible = false
     ui.root:GetChild("Window", true).visible = false
     application['state'] = 'PLAY_GAME'
+    Application:PlayGame()
 end

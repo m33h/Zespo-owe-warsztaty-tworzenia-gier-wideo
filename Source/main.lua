@@ -10,3 +10,7 @@ function Start()
     Application:CreateScene()
     Application:InitializeMenu()
 end
+--
+--function HandleUpdate(eventType, eventData)
+--    print("dddupa")
+--end
