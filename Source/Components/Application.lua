@@ -81,6 +81,14 @@ end
 
 function MoveCamera(timeStep)
     local MOVE_SPEED = 20.0
+    local MOUSE_SENSITIVITY = 0.1
+    local mouseMove = input.mouseMove
+
+    yaw = yaw + MOUSE_SENSITIVITY * mouseMove.x
+    pitch = pitch + MOUSE_SENSITIVITY * mouseMove.y
+    pitch = Clamp(pitch, -90.0, 90.0)
+
+    cameraNode.rotation = Quaternion(pitch, yaw, 0.0)
 
     if input:GetKeyDown(KEY_W) then
         cameraNode:Translate(Vector3(0.0, 0.0, 1.0) * MOVE_SPEED * timeStep)
@@ -99,5 +107,9 @@ end
 -- todo: move this to Application class
 function HandleUpdate(eventType, eventData)
     local timeStep = eventData["TimeStep"]:GetFloat()
-    MoveCamera(timeStep)
+    if(application.state == 'PLAY_GAME') then
+        MoveCamera(timeStep)
+    end
+
+
 end

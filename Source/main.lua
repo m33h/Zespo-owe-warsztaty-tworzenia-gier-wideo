@@ -3,6 +3,8 @@ require "Source/Components/Menu"
 
 scene_ = nil
 cameraNode = nil
+yaw = 0
+pitch = 0
 
 function Start()
     application = Application:new()
@@ -10,7 +12,3 @@ function Start()
     Application:CreateScene()
     Application:InitializeMenu()
 end
---
---function HandleUpdate(eventType, eventData)
---    print("dddupa")
---end
