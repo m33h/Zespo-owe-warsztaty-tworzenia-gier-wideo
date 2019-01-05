@@ -12,5 +12,5 @@ function Start()
 
     Application:CreateScene()
     Application:InitializeMenu()
-    Application:CreateVehicle()
+
 end

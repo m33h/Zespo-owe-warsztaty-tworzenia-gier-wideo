@@ -23,6 +23,7 @@ end
 
 function Application:subscribeToEvents()
     SubscribeToEvent("Update", "HandleUpdate")
+    SubscribeToEvent("PostUpdate", "HandlePostUpdate")
 end
 
 function Application:CreateScene()
@@ -38,6 +39,14 @@ function Application:CreateScene()
 
     renderer:SetViewport(0, Viewport:new(scene_, camera))
 
+    local zoneNode = scene_:CreateChild("Zone")
+    local zone = zoneNode:CreateComponent("Zone")
+    zone.ambientColor = Color(0.15, 0.15, 0.15)
+    zone.fogColor = Color(0.5, 0.5, 0.7)
+    zone.fogStart = 300.0
+    zone.fogEnd = 500.0
+    zone.boundingBox = BoundingBox(-2000.0, 2000.0)
+
     local lightNode = scene_:CreateChild("DirectionalLight")
     lightNode.direction = Vector3(0.3, -0.5, 0.425)
     local light = lightNode:CreateComponent("Light")
@@ -51,18 +60,21 @@ function Application:CreateScene()
     terrainNode.position = Vector3(0.0, 0.0, 0.0)
     local terrain = terrainNode:CreateComponent("Terrain")
     terrain.patchSize = 64
-    terrain.spacing = Vector3(0, 0, 0) -- our map is flat
-    terrain.smoothing = true
+    terrain.spacing = Vector3(1, 0, 1) -- our map is flat
+--    terrain.smoothing = true
     terrain.heightMap = cache:GetResource("Image", "Textures/HeightMap.png")
     terrain.material = cache:GetResource("Material", "Materials/Terrain.xml")
     terrain.occluder = true
 
+    local body = terrainNode:CreateComponent("RigidBody")
+    body.collisionLayer = 2
     local shape = terrainNode:CreateComponent("CollisionShape")
     shape:SetTerrain()
 end
 
 function Application:PlayGame()
     CreateViewport()
+    Application:CreateVehicle()
 end
 
 function CreateViewport()
@@ -169,29 +181,43 @@ function HandlePostUpdate(eventType, eventData)
         return
     end
 
-    -- Physics update has completed. Position camera behind vehicle
-    local dir = Quaternion(vehicleNode.rotation:YawAngle(), Vector3(0.0, 1.0, 0.0))
-    dir = dir * Quaternion(vehicle.controls.yaw, Vector3(0.0, 1.0, 0.0))
-    dir = dir * Quaternion(vehicle.controls.pitch, Vector3(1.0, 0.0, 0.0))
+    if(application.state == 'PLAY_GAME') then
+--        -- Physics update has completed. Position camera behind vehicle
+--        local dir = Quaternion(vehicleNode.rotation:YawAngle(), Vector3(0.0, 1.0, 0.0))
+--        dir = dir * Quaternion(vehicle.controls.yaw, Vector3(0.0, 1.0, 0.0))
+--        dir = dir * Quaternion(vehicle.controls.pitch, Vector3(1.0, 0.0, 0.0))
+--    local dir = Quaternion(0, Vector3(0,0,0))
 
-    local cameraTargetPos = vehicleNode.position - dir * Vector3(0.0, 0.0, CAMERA_DISTANCE)
-    local cameraStartPos = vehicleNode.position
-    -- Raycast camera against static objects (physics collision mask 2)
-    -- and move it closer to the vehicle if something in between
-    local cameraRay = Ray(cameraStartPos, (cameraTargetPos - cameraStartPos):Normalized())
-    local cameraRayLength = (cameraTargetPos - cameraStartPos):Length()
-    local physicsWorld = scene_:GetComponent("PhysicsWorld")
-    local result = physicsWorld:RaycastSingle(cameraRay, cameraRayLength, 2)
-    if result.body ~= nil then
-        cameraTargetPos = cameraStartPos + cameraRay.direction * (result.distance - 0.5)
+--        local cameraTargetPos = vehicleNode.position - dir * Vector3(0.0, 0.0, 1)
+--        local cameraStartPos = vehicleNode.position
+        -- Raycast camera against static objects (physics collision mask 2)
+        -- and move it closer to the vehicle if something in between
+--        local cameraRay = Ray(cameraStartPos, (cameraTargetPos - cameraStartPos):Normalized())
+--        local cameraRayLength = (cameraTargetPos - cameraStartPos):Length()
+--        local physicsWorld = scene_:GetComponent("PhysicsWorld")
+--        local result = physicsWorld:RaycastSingle(cameraRay, cameraRayLength, 2)
+
+        if(application.state == 'PLAY_GAME') then
+    --        dbg()
+        end
+
+--        if result.body ~= nil then
+--            cameraTargetPos = cameraStartPos + cameraRay.direction * (result.distance - 0.5)
+--            dbg()
+--
+--        end
+
+    --    dbg()
+
+--        cameraTargetPos = cameraTargetPos +  Vector3(0, 3, 0)
+--        cameraNode.position = cameraTargetPos
+--        cameraNode.rotation = dir
     end
-    cameraNode.position = cameraTargetPos
-    cameraNode.rotation = dir
 end
 
 function Application:CreateVehicle()
     vehicleNode = scene_:CreateChild("Vehicle")
-    vehicleNode.position = Vector3(0.0, 3, 0.0)
+    vehicleNode.position = Vector3(0.0, 3.55, 0.0)
 
     -- Create the vehicle logic script object
     local vehicle = vehicleNode:CreateScriptObject("Vehicle")
@@ -213,14 +239,14 @@ function Vehicle:Init()
     hullObject.castShadows = true
     hullShape:SetBox(Vector3(1.0, 1.0, 1.0))
 
-    self.hullBody.mass = -1
-    self.hullBody.linearDamping = 0.2 -- Some air resistance
+    self.hullBody.mass = 10
+    self.hullBody.linearDamping = 0.2
     self.hullBody.angularDamping = 0.5
     self.hullBody.collisionLayer = 1
-    self.frontLeft = self:InitWheel("FrontLeft", Vector3(0.5, -0.5, 0.5))
-    self.frontRight = self:InitWheel("FrontRight", Vector3(-0.5, -0.5, 0.5))
-    self.rearLeft = self:InitWheel("RearLeft", Vector3(0.5, -0.5, -0.5))
-    self.rearRight = self:InitWheel("RearRight", Vector3(-0.5, -0.5, -0.5))
+    self.frontLeft = self:InitWheel( "FrontLeft",  Vector3(0.5, 0.55, 0.5))
+    self.frontRight = self:InitWheel("FrontRight", Vector3(-0.5, 0.55, 0.5))
+    self.rearLeft = self:InitWheel(  "RearLeft",   Vector3(0.5, 0.55, -0.5))
+    self.rearRight = self:InitWheel( "RearRight",  Vector3(-0.5, 0.55, -0.5))
 
     self:PostInit()
 end
@@ -231,12 +257,14 @@ function Vehicle:InitWheel(name, offset)
     local wheelNode = scene_:CreateChild(name)
     local node = self.node
     wheelNode.position = node:LocalToWorld(offset)
+
+    -- fail
     if offset.x >= 0.0 then
         wheelNode.rotation = node.worldRotation * Quaternion(0.0, 0.0, -9.0)
     else
         wheelNode.rotation = node.worldRotation * Quaternion(0.0, 0.0, 9.0)
     end
-    wheelNode.scale = Vector3(0.8, 0.5, 0.8)
+    wheelNode.scale = Vector3(1, 0.5, 1)
 
     local wheelObject = wheelNode:CreateComponent("StaticModel")
     local wheelBody = wheelNode:CreateComponent("RigidBody")
@@ -288,49 +316,50 @@ function Vehicle:PostInit()
 end
 
 function Vehicle:FixedUpdate(timeStep)
-    local newSteering = 0.0
-    local accelerator = 0.0
-
-    if self.controls:IsDown(CTRL_LEFT) then
-        newSteering = -1.0
-    end
-    if self.controls:IsDown(CTRL_RIGHT) then
-        newSteering = 1.0
-    end
-    if self.controls:IsDown(CTRL_FORWARD) then
-        accelerator = 1.0
-    end
-    if self.controls:IsDown(CTRL_BACK) then
-        accelerator = -0.5
-    end
-
-    -- When steering, wake up the wheel rigidbodies so that their orientation is updated
-    if newSteering ~= 0.0 then
-        self.frontLeftBody:Activate()
-        self.frontRightBody:Activate()
-        self.steering = self.steering * 0.95 + newSteering * 0.05
-    else
-        self.steering = self.steering * 0.8 + newSteering * 0.2
-    end
-
-    local steeringRot = Quaternion(0.0, self.steering * MAX_WHEEL_ANGLE, 0.0)
-    self.frontLeftAxis.otherAxis = steeringRot * Vector3(-1.0, 0.0, 0.0)
-    self.frontRightAxis.otherAxis = steeringRot * Vector3(1.0, 0.0, 0.0)
-
-    if accelerator ~= 0.0 then
-        -- Torques are applied in world space, so need to take the vehicle & wheel rotation into account
-        -- refactor
-        local torqueVec = Vector3(ENGINE_POWER * accelerator * 0.00001, 0.0, 0.0)
-        local node = self.node
-        self.frontLeftBody:ApplyTorque(node.rotation * steeringRot * torqueVec)
-        self.frontRightBody:ApplyTorque(node.rotation * steeringRot * torqueVec)
-        self.rearLeftBody:ApplyTorque(node.rotation * torqueVec)
-        self.rearRightBody:ApplyTorque(node.rotation * torqueVec)
-    end
-
-    -- Apply downforce proportional to velocity
+--    local newSteering = 0.0
+--    local accelerator = 0.0
+--
+--    if self.controls:IsDown(CTRL_LEFT) then
+--        newSteering = -1.0
+--    end
+--    if self.controls:IsDown(CTRL_RIGHT) then
+--        newSteering = 1.0
+--    end
+--    if self.controls:IsDown(CTRL_FORWARD) then
+--        accelerator = 1.0
+--    end
+--    if self.controls:IsDown(CTRL_BACK) then
+--        accelerator = -0.5
+--    end
+--
+--    -- When steering, wake up the wheel rigidbodies so that their orientation is updated
+--    if newSteering ~= 0.0 then
+--        self.frontLeftBody:Activate()
+--        self.frontRightBody:Activate()
+--        self.steering = self.steering * 0.95 + newSteering * 0.05
+--    else
+--        self.steering = self.steering * 0.8 + newSteering * 0.2
+--    end
+--
+--    local steeringRot = Quaternion(0.0, self.steering * MAX_WHEEL_ANGLE, 0.0)
+--    self.frontLeftAxis.otherAxis = steeringRot * Vector3(-1.0, 0.0, 0.0)
+--    self.frontRightAxis.otherAxis = steeringRot * Vector3(1.0, 0.0, 0.0)
+--
+--    if accelerator ~= 0.0 then
+--        -- Torques are applied in world space, so need to take the vehicle & wheel rotation into account
+--        -- refactor
+--        local torqueVec = Vector3(ENGINE_POWER * accelerator * 0.001, 0.0, 0.0)
+--        local node = self.node
+----        self.frontLeftBody:ApplyTorque(node.rotation * steeringRot * torqueVec)
+----        self.frontRightBody:ApplyTorque(node.rotation * steeringRot * torqueVec)
+----        self.rearLeftBody:ApplyTorque(node.rotation * torqueVec)
+----        self.rearRightBody:ApplyTorque(node.rotation * torqueVec)
+--    end
+--
+--    -- Apply downforce proportional to velocity
 --    local localVelocity = self.hullBody.rotation:Inverse() * self.hullBody.linearVelocity
---    self.hullBody:ApplyForce(self.hullBody.rotation * Vector3(0.0, -1.0, 0.0) * Abs(localVelocity.z) * DOWN_FORCE)
+--    self.hullBody:ApplyForce( Vector3(0.0, 1.0, 0.0) )
+----    self.hullBody:ApplyForce(Vector3(0,0,0))
 end
 
 function Vehicle:Start()
