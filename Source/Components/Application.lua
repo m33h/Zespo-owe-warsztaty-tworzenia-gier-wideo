@@ -1,27 +1,17 @@
 require "Source/Components/Debug"
 
 local vehicleNode = nil
-local CTRL_FORWARD = 1
-local CTRL_BACK = 2
-local CTRL_LEFT = 4
-local CTRL_RIGHT = 8
-
 local CAMERA_DISTANCE = 10.0
-local YAW_SENSITIVITY = 0.1
-local ENGINE_POWER = 10.0
-local DOWN_FORCE = 10.0
-local MAX_WHEEL_ANGLE = 22.5
 
 Vehicle = ScriptObject()
 
 function Application:new()
     classVariables = { state = 'GAME_MENU' }
     self.__index = self
-    self.subscribeToEvents()
     return setmetatable(classVariables, self)
 end
 
-function Application:subscribeToEvents()
+function Application:SubscribeToEvents()
     SubscribeToEvent("Update", "HandleUpdate")
     SubscribeToEvent("PostUpdate", "HandlePostUpdate")
 end
@@ -74,7 +64,16 @@ end
 
 function Application:PlayGame()
     CreateViewport()
-    Application:CreateVehicle()
+end
+
+function Application:CreateVehicle(vehicleNode)
+    vehicleNode = scene_:CreateChild("Vehicle")
+    vehicleNode.position = Vector3(0.0, 5.0, 0.0)
+
+    -- Create the vehicle logic script object
+    local vehicle = vehicleNode:CreateScriptObject("Vehicle")
+    -- Create the rendering and physics components
+    vehicle:Init()
 end
 
 function CreateViewport()
@@ -115,62 +114,6 @@ function MoveCamera(timeStep)
     end
 end
 
--- todo: move this to Application class
-function HandleUpdate(eventType, eventData)
-    if vehicleNode == nil then
-        return
-    end
-
-    local vehicle = vehicleNode:GetScriptObject()
-
-    if vehicle == nil then
-        return
-    end
-
---     Get movement controls and assign them to the vehicle component. If UI has a focused element, clear controls
-    if ui.focusElement == nil then
-        vehicle.controls:Set(CTRL_FORWARD, input:GetKeyDown(KEY_W))
-        vehicle.controls:Set(CTRL_BACK, input:GetKeyDown(KEY_S))
-        vehicle.controls:Set(CTRL_LEFT, input:GetKeyDown(KEY_A))
-        vehicle.controls:Set(CTRL_RIGHT, input:GetKeyDown(KEY_D))
-
-        -- Add yaw & pitch from the mouse motion or touch input. Used only for the camera, does not affect motion
-        if touchEnabled then
-            for i=0, input.numTouches - 1 do
-                local state = input:GetTouch(i)
-                if not state.touchedElement then -- Touch on empty space
-                    local camera = cameraNode:GetComponent("Camera")
-                    if not camera then return end
-
-                    vehicle.controls.yaw = vehicle.controls.yaw + TOUCH_SENSITIVITY * camera.fov / graphics.height * state.delta.x
-                    vehicle.controls.pitch = vehicle.controls.pitch + TOUCH_SENSITIVITY * camera.fov / graphics.height * state.delta.y
-                end
-            end
-        else
-            vehicle.controls.yaw = vehicle.controls.yaw + input.mouseMoveX * YAW_SENSITIVITY
-            vehicle.controls.pitch = vehicle.controls.pitch + input.mouseMoveY * YAW_SENSITIVITY
-        end
-        -- Limit pitch
-        vehicle.controls.pitch = Clamp(vehicle.controls.pitch, 0.0, 80.0)
-
-    else
---        dbg()
-        vehicle.controls:Set(CTRL_FORWARD + CTRL_BACK + CTRL_LEFT + CTRL_RIGHT, false)
-    end
-
-    local timeStep = eventData["TimeStep"]:GetFloat()
-    if(application.state == 'PLAY_GAME') then
-        MoveCamera(timeStep)
-    end
-    if input:GetKeyDown(KEY_ESCAPE) then
-        input.mouseVisible = true
-        ui.root:GetChild("ExitButton", true).visible = true
-        ui.root:GetChild("ResumeButton", true).visible = true
-        ui.root:GetChild("Window", true).visible = true
-        application['state'] = 'GAME_MENU'
-    end
-end
-
 function HandlePostUpdate(eventType, eventData)
     if vehicleNode == nil then
         return
@@ -181,37 +124,48 @@ function HandlePostUpdate(eventType, eventData)
         return
     end
 
-    if(application.state == 'PLAY_GAME') then
---        -- Physics update has completed. Position camera behind vehicle
---        local dir = Quaternion(vehicleNode.rotation:YawAngle(), Vector3(0.0, 1.0, 0.0))
---        dir = dir * Quaternion(vehicle.controls.yaw, Vector3(0.0, 1.0, 0.0))
---        dir = dir * Quaternion(vehicle.controls.pitch, Vector3(1.0, 0.0, 0.0))
---    local dir = Quaternion(0, Vector3(0,0,0))
+    local dir = Quaternion(vehicleNode.rotation:YawAngle(), Vector3(0.0, 1.0, 0.0))
+    dir = dir * Quaternion(vehicle.controls.yaw, Vector3(0.0, 1.0, 0.0))
+    dir = dir * Quaternion(vehicle.controls.pitch, Vector3(1.0, 0.0, 0.0))
 
---        local cameraTargetPos = vehicleNode.position - dir * Vector3(0.0, 0.0, 1)
---        local cameraStartPos = vehicleNode.position
-        -- Raycast camera against static objects (physics collision mask 2)
-        -- and move it closer to the vehicle if something in between
---        local cameraRay = Ray(cameraStartPos, (cameraTargetPos - cameraStartPos):Normalized())
---        local cameraRayLength = (cameraTargetPos - cameraStartPos):Length()
---        local physicsWorld = scene_:GetComponent("PhysicsWorld")
---        local result = physicsWorld:RaycastSingle(cameraRay, cameraRayLength, 2)
+    local cameraTargetPos = vehicleNode.position - dir * Vector3(0.0, 0.0, CAMERA_DISTANCE)
+    local cameraStartPos = vehicleNode.position
 
-        if(application.state == 'PLAY_GAME') then
-    --        dbg()
+    -- Raycast camera against static objects (physics collision mask 2)
+    -- and move it closer to the vehicle if something in between
+    local cameraRay = Ray(cameraStartPos, (cameraTargetPos - cameraStartPos):Normalized())
+    local cameraRayLength = (cameraTargetPos - cameraStartPos):Length()
+    local physicsWorld = scene_:GetComponent("PhysicsWorld")
+    local result = physicsWorld:RaycastSingle(cameraRay, cameraRayLength, 2)
+    if result.body ~= nil then
+        cameraTargetPos = cameraStartPos + cameraRay.direction * (result.distance - 0.5)
+    end
+    cameraNode.position = cameraTargetPos
+    cameraNode.rotation = dir
+end
+
+function HandleSceneUpdate(eventType, eventData)
+    -- Move the camera by touch, if the camera node is initialized by descendant sample class
+    if touchEnabled and cameraNode then
+        for i=0, input:GetNumTouches()-1 do
+            local state = input:GetTouch(i)
+            if not state.touchedElement then -- Touch on empty space
+                if state.delta.x or state.delta.y then
+                    local camera = cameraNode:GetComponent("Camera")
+                    if not camera then return end
+
+                    yaw = yaw + TOUCH_SENSITIVITY * camera.fov / graphics.height * state.delta.x
+                    pitch = pitch + TOUCH_SENSITIVITY * camera.fov / graphics.height * state.delta.y
+
+                    -- Construct new orientation for the camera scene node from yaw and pitch; roll is fixed to zero
+                    cameraNode:SetRotation(Quaternion(pitch, yaw, 0))
+                else
+                    -- Move the cursor to the touch position
+                    local cursor = ui:GetCursor()
+                    if cursor and cursor:IsVisible() then cursor:SetPosition(state.position) end
+                end
+            end
         end
-
---        if result.body ~= nil then
---            cameraTargetPos = cameraStartPos + cameraRay.direction * (result.distance - 0.5)
---            dbg()
---
---        end
-
-    --    dbg()
-
---        cameraTargetPos = cameraTargetPos +  Vector3(0, 3, 0)
---        cameraNode.position = cameraTargetPos
---        cameraNode.rotation = dir
     end
 end
 
@@ -223,6 +177,8 @@ function Application:CreateVehicle()
     local vehicle = vehicleNode:CreateScriptObject("Vehicle")
     -- Create the rendering and physics components
     vehicle:Init()
+
+    return vehicleNode
 end
 
 function Vehicle:Init()
@@ -313,53 +269,6 @@ function Vehicle:PostInit()
     self.frontRightBody = self.frontRight:GetComponent("RigidBody")
     self.rearLeftBody = self.rearLeft:GetComponent("RigidBody")
     self.rearRightBody = self.rearRight:GetComponent("RigidBody")
-end
-
-function Vehicle:FixedUpdate(timeStep)
---    local newSteering = 0.0
---    local accelerator = 0.0
---
---    if self.controls:IsDown(CTRL_LEFT) then
---        newSteering = -1.0
---    end
---    if self.controls:IsDown(CTRL_RIGHT) then
---        newSteering = 1.0
---    end
---    if self.controls:IsDown(CTRL_FORWARD) then
---        accelerator = 1.0
---    end
---    if self.controls:IsDown(CTRL_BACK) then
---        accelerator = -0.5
---    end
---
---    -- When steering, wake up the wheel rigidbodies so that their orientation is updated
---    if newSteering ~= 0.0 then
---        self.frontLeftBody:Activate()
---        self.frontRightBody:Activate()
---        self.steering = self.steering * 0.95 + newSteering * 0.05
---    else
---        self.steering = self.steering * 0.8 + newSteering * 0.2
---    end
---
---    local steeringRot = Quaternion(0.0, self.steering * MAX_WHEEL_ANGLE, 0.0)
---    self.frontLeftAxis.otherAxis = steeringRot * Vector3(-1.0, 0.0, 0.0)
---    self.frontRightAxis.otherAxis = steeringRot * Vector3(1.0, 0.0, 0.0)
---
---    if accelerator ~= 0.0 then
---        -- Torques are applied in world space, so need to take the vehicle & wheel rotation into account
---        -- refactor
---        local torqueVec = Vector3(ENGINE_POWER * accelerator * 0.001, 0.0, 0.0)
---        local node = self.node
-----        self.frontLeftBody:ApplyTorque(node.rotation * steeringRot * torqueVec)
-----        self.frontRightBody:ApplyTorque(node.rotation * steeringRot * torqueVec)
-----        self.rearLeftBody:ApplyTorque(node.rotation * torqueVec)
-----        self.rearRightBody:ApplyTorque(node.rotation * torqueVec)
---    end
---
---    -- Apply downforce proportional to velocity
---    local localVelocity = self.hullBody.rotation:Inverse() * self.hullBody.linearVelocity
---    self.hullBody:ApplyForce( Vector3(0.0, 1.0, 0.0) )
-----    self.hullBody:ApplyForce(Vector3(0,0,0))
 end
 
 function Vehicle:Start()
