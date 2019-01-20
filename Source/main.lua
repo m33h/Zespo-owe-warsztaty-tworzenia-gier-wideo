@@ -22,6 +22,7 @@ function Start()
 
     Application:InitializeMenu()
     Application:SubscribeToEvents()
+    CreateSpeedMeter()
 end
 
 function CreateVehicle()
@@ -30,6 +31,31 @@ function CreateVehicle()
 
     local vehicle = vehicleNode:CreateScriptObject("Vehicle")
     vehicle:Init()
+end
+
+function CreateSpeedMeter()
+    speedText = Text:new()
+
+    speedText.text = "0km/h"
+    speedText:SetFont(cache:GetResource("Font", "Fonts/Anonymous Pro.ttf"), 42)
+    speedText.color = Color.BLUE
+
+    local offset_X = 20
+    local offset_Y = 20
+    local pos_X = ui.root:GetWidth() - speedText:GetWidth() - offset_X
+    local pos_Y = ui.root:GetHeight() - speedText:GetHeight() - offset_Y
+    speedText:SetPosition(pos_X, pos_Y)
+
+    ui.root:AddChild(speedText)
+end
+
+function UpdateSpeedMeter(speedValue)
+    speedText.text = math.floor(speedValue).."km/h"
+    local offset_X = 20
+    local offset_Y = 20
+    local pos_X = ui.root:GetWidth() - speedText:GetWidth() - offset_X
+    local pos_Y = ui.root:GetHeight() - speedText:GetHeight() - offset_Y
+    speedText:SetPosition(pos_X, pos_Y)
 end
 
 function HandleUpdate(eventType, eventData)
@@ -102,6 +128,9 @@ function HandlePostUpdate(eventType, eventData)
     if vehicle == nil then
         return
     end
+
+    local speed = vehicle.hullBody.linearVelocity:Length()
+    UpdateSpeedMeter(speed)
 
     -- Physics update has completed. Position camera behind vehicle
     local dir = Quaternion(vehicleNode.rotation:YawAngle(), Vector3(0.0, 1.0, 0.0))
