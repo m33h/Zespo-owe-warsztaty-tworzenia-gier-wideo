@@ -1,4 +1,5 @@
 require "Source/Components/Debug"
+require "Source/Components/Timer"
 
 local vehicleNode = nil
 local CAMERA_DISTANCE = 10.0
@@ -60,6 +61,8 @@ function Application:CreateScene()
     body.collisionLayer = 2
     local shape = terrainNode:CreateComponent("CollisionShape")
     shape:SetTerrain()
+
+    scene_:CreateScriptObject("Timer")
 end
 
 function Application:PlayGame()

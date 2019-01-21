@@ -255,6 +255,8 @@ function Vehicle:InitWheel(name, offset)
 end
 
 function Vehicle:FixedUpdate(timeStep)
+--    UpdateTimer(timeStep)
+
     local newSteering = 0.0
     local accelerator = 0.0
 
