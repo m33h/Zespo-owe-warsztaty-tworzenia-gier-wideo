@@ -1,11 +1,9 @@
-require "Source/Components/Debug"
-
 local window = nil
 
 Application = {}
 require "Source/Components/Application"
 
-function Application:InitializeMenu()
+function InitializeMenu()
     input.mouseVisible = true
     local style = cache:GetResource("XMLFile", "UI/DefaultStyle.xml")
     ui.root.defaultStyle = style
@@ -22,7 +20,6 @@ function InitWindow()
     window:SetName("Window")
     window:SetResizable(true)
 end
-
 
 function InitControls()
     local font = cache:GetResource("Font", "Fonts/Anonymous Pro.ttf")
