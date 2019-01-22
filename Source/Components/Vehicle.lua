@@ -119,7 +119,7 @@ function Vehicle:Save(serializer)
     serializer:WriteFloat(self.controls.pitch)
 end
 
-function FixedUpdate(timeStep)
+function Vehicle:FixedUpdate(timeStep)
     print("Vehicle:Start")
 
     local newSteering = 0.0
