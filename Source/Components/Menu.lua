@@ -1,7 +1,5 @@
 local window = nil
 
-Application = {}
-require "Source/Components/Application"
 
 function InitializeMenu()
     input.mouseVisible = true

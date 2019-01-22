@@ -21,14 +21,14 @@ function Vehicle:Init(scene)
     hullObject.castShadows = true
     hullShape:SetBox(Vector3(1.0, 1.0, 1.0))
 
-    self.hullBody.mass = 10
+    self.hullBody.mass = 5
     self.hullBody.linearDamping = 0.2
     self.hullBody.angularDamping = 0.5
     self.hullBody.collisionLayer = 1
-    self.frontLeft = self:InitWheel( "FrontLeft",  Vector3(0.5, 0.55, 0.5))
-    self.frontRight = self:InitWheel("FrontRight", Vector3(-0.5, 0.55, 0.5))
-    self.rearLeft = self:InitWheel(  "RearLeft",   Vector3(0.5, 0.55, -0.5))
-    self.rearRight = self:InitWheel( "RearRight",  Vector3(-0.5, 0.55, -0.5))
+    self.frontLeft = self:InitWheel("FrontLeft", Vector3(-0.6, -0.4, 0.3))
+    self.frontRight = self:InitWheel("FrontRight", Vector3(0.6, -0.4, 0.3))
+    self.rearLeft = self:InitWheel("RearLeft", Vector3(-0.6, -0.4, -0.3))
+    self.rearRight = self:InitWheel("RearRight", Vector3(0.6, -0.4, -0.3))
     self:PostInit()
 end
 
@@ -57,7 +57,7 @@ function Vehicle:InitWheel(name, offset)
     wheelObject.model = cache:GetResource("Model", "Models/Cylinder.mdl")
     wheelObject.material = cache:GetResource("Material", "Materials/Stone.xml")
     wheelObject.castShadows = true
-    wheelShape:SetSphere(0.01)
+    wheelShape:SetSphere(1)
     wheelBody.friction = 1
     wheelBody.mass = 1
     wheelBody.linearDamping = 0.2 -- Some air resistance
@@ -120,7 +120,6 @@ function Vehicle:Save(serializer)
 end
 
 function Vehicle:FixedUpdate(timeStep)
-    print("Vehicle:Start")
 
     local newSteering = 0.0
     local accelerator = 0.0

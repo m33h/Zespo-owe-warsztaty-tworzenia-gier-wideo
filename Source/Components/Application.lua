@@ -1,5 +1,6 @@
 require "Source/Components/AppConstants"
 require "Source/Components/Vehicle"
+require "Source/Components/Menu"
 
 local vehicleNode
 
@@ -46,7 +47,7 @@ function  Application:CreateVehicle(vehiclesrc)
     print("Application:CreateVehicle")
 
     vehicleNode = scene_:CreateChild("Vehicle")
-    vehicleNode.position = Vector3(15, 100.0, -15.0)
+    vehicleNode.position = Vector3(15, 3.0, -15.0)
 
     local vehicle = vehicleNode:CreateScriptObject("Vehicle")
     vehicle:Init(scene_)
