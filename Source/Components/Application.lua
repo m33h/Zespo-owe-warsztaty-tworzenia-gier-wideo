@@ -15,13 +15,6 @@ function Start()
     InitializeMenu()
 end
 
-function Application:new()
-    print("Application:new")
-    classVariables = { state = 'GAME_MENU' }
-    self.__index = self
-    return setmetatable(classVariables, self)
-end
-
 function Application:SubscribeToEvents()
     SubscribeToEvent("Update", "HandleUpdate")
     SubscribeToEvent("PostUpdate", "HandlePostUpdate")
@@ -84,6 +77,31 @@ function  Application:MoveCamera(timeStep)
     end
 end
 
+function GameInput(vehicle)
+    -- Get movement controls and assign them to the vehicle component. If UI has a focused element, clear controls
+    if ui.focusElement == nil then
+        SetKeyboardControls(vehicle)
+        SetMouseControls(vehicle)
+    else
+        vehicle.controls:Set(CTRL_FORWARD + CTRL_BACK + CTRL_LEFT + CTRL_RIGHT, false)
+    end
+    if input:GetKeyDown(KEY_ESCAPE) then
+        ChangeState('GAME_MENU')
+    end
+end
+
+function SetKeyboardControls(vehicle)
+    vehicle.controls:Set(CTRL_FORWARD, input:GetKeyDown(KEY_W))
+    vehicle.controls:Set(CTRL_BACK, input:GetKeyDown(KEY_S))
+    vehicle.controls:Set(CTRL_LEFT, input:GetKeyDown(KEY_A))
+    vehicle.controls:Set(CTRL_RIGHT, input:GetKeyDown(KEY_D))
+end
+
+function SetMouseControls(vehicle)
+    vehicle.controls.yaw = vehicle.controls.yaw + input.mouseMoveX * YAW_SENSITIVITY
+    vehicle.controls.pitch = vehicle.controls.pitch + input.mouseMoveY * YAW_SENSITIVITY
+    vehicle.controls.pitch = Clamp(vehicle.controls.pitch, 0.0, 80.0) -- Limit pitch
+end
 
 function HandleUpdate(eventType, eventData)
     if vehicleNode == nil then
@@ -95,46 +113,19 @@ function HandleUpdate(eventType, eventData)
         return
     end
 
-    if(application.state == 'PLAY_GAME') then
-        -- Get movement controls and assign them to the vehicle component. If UI has a focused element, clear controls
-        if ui.focusElement == nil then
-            vehicle.controls:Set(CTRL_FORWARD, input:GetKeyDown(KEY_W))
-            vehicle.controls:Set(CTRL_BACK, input:GetKeyDown(KEY_S))
-            vehicle.controls:Set(CTRL_LEFT, input:GetKeyDown(KEY_A))
-            vehicle.controls:Set(CTRL_RIGHT, input:GetKeyDown(KEY_D))
-
-            -- Add yaw & pitch from the mouse motion or touch input. Used only for the camera, does not affect motion
-            if touchEnabled then
-                for i=0, input.numTouches - 1 do
-                    local state = input:GetTouch(i)
-                    if not state.touchedElement then -- Touch on empty space
-                        local camera = cameraNode:GetComponent("Camera")
-                        if not camera then return end
-
-                        vehicle.controls.yaw = vehicle.controls.yaw + TOUCH_SENSITIVITY * camera.fov / graphics.height * state.delta.x
-                        vehicle.controls.pitch = vehicle.controls.pitch + TOUCH_SENSITIVITY * camera.fov / graphics.height * state.delta.y
-                    end
-                end
-            else
-                vehicle.controls.yaw = vehicle.controls.yaw + input.mouseMoveX * YAW_SENSITIVITY
-                vehicle.controls.pitch = vehicle.controls.pitch + input.mouseMoveY * YAW_SENSITIVITY
-            end
-            -- Limit pitch
-            vehicle.controls.pitch = Clamp(vehicle.controls.pitch, 0.0, 80.0)
-        end
-
-        else
-            vehicle.controls:Set(CTRL_FORWARD + CTRL_BACK + CTRL_LEFT + CTRL_RIGHT, false)
-        end
-        if input:GetKeyDown(KEY_ESCAPE) then
-            input.mouseVisible = true
-            ui.root:GetChild("ExitButton", true).visible = true
-            ui.root:GetChild("ResumeButton", true).visible = true
-            ui.root:GetChild("Window", true).visible = true
-            application['state'] = 'GAME_MENU'
-        end
+    if(GAME_STATE == 'PLAY_GAME') then
+        GameInput(vehicle)
+    elseif(GAME_STATE == 'GAME_MENU') then
+        Menu()
+    end
 end
 
+function Menu()
+    input.mouseVisible = true
+    ui.root:GetChild("ExitButton", true).visible = true
+    ui.root:GetChild("ResumeButton", true).visible = true
+    ui.root:GetChild("Window", true).visible = true
+end
 
 function HandlePostUpdate(eventType, eventData)
     if vehicleNode == nil then

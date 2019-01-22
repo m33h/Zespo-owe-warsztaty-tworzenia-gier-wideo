@@ -9,4 +9,8 @@ ENGINE_POWER = 10.0
 DOWN_FORCE = 10.0
 MAX_WHEEL_ANGLE = 22.5
 
-application = {}
+GAME_STATE = "BEGIN_GAME"
+
+function ChangeState(state)
+    GAME_STATE = state
+end

@@ -71,7 +71,7 @@ function HandlePlayButton()
     ui.root:GetChild("ExitButton", true).visible = false
     ui.root:GetChild("PlayButton", true).visible = false
     ui.root:GetChild("Window", true).visible = false
-    application['state'] = 'PLAY_GAME'
+    ChangeState('PLAY_GAME')
     Application:PlayGame()
 end
 
@@ -80,5 +80,5 @@ function HandleResumeButton()
     ui.root:GetChild("ExitButton", true).visible = false
     ui.root:GetChild("ResumeButton", true).visible = false
     ui.root:GetChild("Window", true).visible = false
-    application['state'] = 'PLAY_GAME'
+    ChangeState('PLAY_GAME')
 end
