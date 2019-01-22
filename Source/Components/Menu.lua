@@ -1,5 +1,5 @@
+require "Source/Components/AppConstants"
 local window = nil
-
 
 function InitializeMenu()
     input.mouseVisible = true

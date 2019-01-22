@@ -8,24 +8,26 @@ Application = ScriptObject()
 
 function Start()
     print("Application:Start")
+
     Application:CreateScene()
     Application:CreateVehicle()
     Application:SubscribeToEvents()
+    InitializeMenu()
 end
 
-function  Application:new()
+function Application:new()
     print("Application:new")
     classVariables = { state = 'GAME_MENU' }
     self.__index = self
     return setmetatable(classVariables, self)
 end
 
-function  Application:SubscribeToEvents()
+function Application:SubscribeToEvents()
     SubscribeToEvent("Update", "HandleUpdate")
     SubscribeToEvent("PostUpdate", "HandlePostUpdate")
 end
 
-function  Application:CreateScene()
+function Application:CreateScene()
     scene_ = Scene()
     local sceneFileName = fileSystem:GetProgramDir() .. "Assets/scenes/mainScene2.xml"
     scene_:LoadXML(sceneFileName)
@@ -40,7 +42,7 @@ function  Application:CreateScene()
 end
 
 function Application:PlayGame()
-    CreateViewport()
+    Application:CreateViewport()
 end
 
 function  Application:CreateVehicle(vehiclesrc)
@@ -93,7 +95,7 @@ function HandleUpdate(eventType, eventData)
         return
     end
 
-    --[[if(application.state == 'PLAY_GAME') then]]
+    if(application.state == 'PLAY_GAME') then
         -- Get movement controls and assign them to the vehicle component. If UI has a focused element, clear controls
         if ui.focusElement == nil then
             vehicle.controls:Set(CTRL_FORWARD, input:GetKeyDown(KEY_W))
@@ -119,7 +121,7 @@ function HandleUpdate(eventType, eventData)
             end
             -- Limit pitch
             vehicle.controls.pitch = Clamp(vehicle.controls.pitch, 0.0, 80.0)
-
+        end
 
         else
             vehicle.controls:Set(CTRL_FORWARD + CTRL_BACK + CTRL_LEFT + CTRL_RIGHT, false)
@@ -165,26 +167,4 @@ function HandlePostUpdate(eventType, eventData)
 end
 
 function HandleSceneUpdate(eventType, eventData)
-    -- Move the camera by touch, if the camera node is initialized by descendant sample class
-    if touchEnabled and cameraNode then
-        for i=0, input:GetNumTouches()-1 do
-            local state = input:GetTouch(i)
-            if not state.touchedElement then -- Touch on empty space
-                if state.delta.x or state.delta.y then
-                    local camera = cameraNode:GetComponent("Camera")
-                    if not camera then return end
-
-                    yaw = yaw + TOUCH_SENSITIVITY * camera.fov / graphics.height * state.delta.x
-                    pitch = pitch + TOUCH_SENSITIVITY * camera.fov / graphics.height * state.delta.y
-
-                    -- Construct new orientation for the camera scene node from yaw and pitch; roll is fixed to zero
-                    cameraNode:SetRotation(Quaternion(pitch, yaw, 0))
-                else
-                    -- Move the cursor to the touch position
-                    local cursor = ui:GetCursor()
-                    if cursor and cursor:IsVisible() then cursor:SetPosition(state.position) end
-                end
-            end
-        end
-    end
 end
