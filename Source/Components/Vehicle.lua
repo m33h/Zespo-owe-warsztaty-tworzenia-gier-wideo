@@ -100,7 +100,7 @@ function Vehicle:PostInit()
     self.rearRightBody = self.rearRight:GetComponent("RigidBody")
 end
 
-function Start()
+function Vehicle:Start()
     print("Vehicle:Start")
 
     -- Current left/right steering amount (-1 to 1.)
