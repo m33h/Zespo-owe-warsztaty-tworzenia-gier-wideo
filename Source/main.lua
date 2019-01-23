@@ -1,5 +1,6 @@
 require "Source/Components/Debug"
 require "Source/Components/Menu"
+require "Source/Components/Timer"
 
 local CTRL_FORWARD = 1
 local CTRL_BACK = 2
@@ -116,6 +117,15 @@ function HandleUpdate(eventType, eventData)
             ui.root:GetChild("Window", true).visible = true
             application['state'] = 'GAME_MENU'
         end
+        if input:GetKeyDown(KEY_0) then
+            RegisterTime("John")
+            DisplayResults()
+        end
+        if input:GetKeyDown(KEY_1) then
+            RegisterTime("Ela")
+            DisplayResults()
+        end
+
     end
 end
 
@@ -255,7 +265,6 @@ function Vehicle:InitWheel(name, offset)
 end
 
 function Vehicle:FixedUpdate(timeStep)
---    UpdateTimer(timeStep)
 
     local newSteering = 0.0
     local accelerator = 0.0
