@@ -22,7 +22,7 @@ function Vehicle:Init(scene)
     hullShape:SetBox(Vector3(1.0, 1.0, 1.0))
 
     self.hullBody.mass = 5
-    self.hullBody.linearDamping = 0.2
+    self.hullBody.linearDamping = 0.75
     self.hullBody.angularDamping = 0.5
     self.hullBody.collisionLayer = 1
     self.frontLeft = self:InitWheel("FrontLeft", Vector3(-0.6, -0.4, 0.3))
