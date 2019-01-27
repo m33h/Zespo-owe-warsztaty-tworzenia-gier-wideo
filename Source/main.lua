@@ -117,15 +117,38 @@ function HandleUpdate(eventType, eventData)
             ui.root:GetChild("Window", true).visible = true
             application['state'] = 'GAME_MENU'
         end
-        if input:GetKeyDown(KEY_0) then
-            RegisterTime("John")
-            DisplayResults()
-        end
+--        this is only example to use timers
         if input:GetKeyDown(KEY_1) then
-            RegisterTime("Ela")
-            DisplayResults()
+            RegisterTime("Ala")
         end
-
+        if input:GetKeyDown(KEY_2) then
+            RegisterTime("Bartek")
+        end
+        if input:GetKeyDown(KEY_3) then
+            RegisterTime("Cezary")
+        end
+        if input:GetKeyDown(KEY_4) then
+            RegisterTime("Dawid")
+        end
+        if input:GetKeyDown(KEY_5) then
+            application['state'] = "WIN_STATE"
+        end
+    end
+--        this is only example to use timers
+    if (application['state'] == "WIN_STATE") then
+        if input:GetKeyDown(KEY_1) then
+            RegisterTime("Ala")
+        end
+        if input:GetKeyDown(KEY_2) then
+            RegisterTime("Bartek")
+        end
+        if input:GetKeyDown(KEY_3) then
+            RegisterTime("Cezary")
+        end
+        if input:GetKeyDown(KEY_4) then
+            RegisterTime("Dawid")
+        end
+        DisplayResults()
     end
 end
 
