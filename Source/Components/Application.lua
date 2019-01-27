@@ -1,6 +1,7 @@
-require "Source/Components/AppConstants"
-require "Source/Components/Vehicle"
+require "Source/Components/Timer"
 require "Source/Components/Menu"
+require "Source/Components/Vehicle"
+require "Source/Components/AppConstants"
 
 local vehicleNode
 
@@ -33,6 +34,7 @@ function Application:CreateScene()
     camera.farClip = 500.0
 
     renderer:SetViewport(0, Viewport:new(scene_, camera))
+    scene_:CreateScriptObject("Timer")
 end
 
 function Application:PlayGame()
@@ -116,8 +118,11 @@ function HandleUpdate(eventType, eventData)
 
     if(GAME_STATE == 'PLAY_GAME') then
         GameInput(vehicle)
+        TimerDemo()  --used to show timer functionality, it needs to be changed
     elseif(GAME_STATE == 'GAME_MENU') then
         Menu()
+    elseif(GAME_STATE == 'WIN_STATE') then
+        TimerDemo() --used to show timer functionality, it needs to be changed
     end
 end
 
