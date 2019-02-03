@@ -1,13 +1,13 @@
 dbg = require("debugger")
 
-function inspect(table)
-    for k,v in pairs(table) do
-       print("\n\n"..k,v.."\n\n")
-    end
+counter = 0
+
+function inspect(userdata)
+    print(getmetatable(userdata))
 end
 
 function p(userdata)
-    for k,v in pairs(getmatetable(userdata)) do
+    for k,v in pairs(getmetatable(userdata)) do
         print("\n\n"..k,v.."\n\n")
     end
 end

@@ -2,6 +2,8 @@ require "Source/Components/Timer"
 require "Source/Components/Menu"
 require "Source/Components/Vehicle"
 require "Source/Components/AppConstants"
+require "Source/Components/Debug"
+require "Source/Components/Guidelines"
 
 local vehicleNode
 
@@ -15,6 +17,7 @@ function Start()
     Application:SubscribeToEvents()
     InitializeMenu()
     CreateSpeedMeter()
+    CreateGuidelineBox()
 end
 
 function Application:SubscribeToEvents()
@@ -29,7 +32,7 @@ function Application:CreateScene()
 
     cameraNode = Node()
     cameraNode:SetPosition(Vector3(50,50,0))
-    cameraNode:SetDirection(Vector3(-1,-1,0))
+    cameraNode:SetDirection(Vector3(1,1,0))
     local camera = cameraNode:CreateComponent("Camera")
     camera.farClip = 500.0
 
@@ -45,7 +48,8 @@ function  Application:CreateVehicle(vehiclesrc)
     print("Application:CreateVehicle")
 
     vehicleNode = scene_:CreateChild("Vehicle")
-    vehicleNode.position = Vector3(15, 3.0, -15.0)
+    vehicleNode.position = Vector3(100, 3.0, 200.0)
+    vehicleNode:SetDirection(Vector3(-1,0,0))
 
     local vehicle = vehicleNode:CreateScriptObject("Vehicle")
     vehicle:Init(scene_)
@@ -55,17 +59,6 @@ function  Application:CreateViewport()
 end
 
 function  Application:MoveCamera(timeStep)
-    print("Move Camera")
-    local MOVE_SPEED = 20.0
-    local MOUSE_SENSITIVITY = 0.1
-    local mouseMove = input.mouseMove
-
-    yaw = yaw + MOUSE_SENSITIVITY * mouseMove.x
-    pitch = pitch + MOUSE_SENSITIVITY * mouseMove.y
-    pitch = Clamp(pitch, -90.0, 90.0)
-
-    cameraNode.rotation = Quaternion(pitch, yaw, 0.0)
-
     if input:GetKeyDown(KEY_T) then
         cameraNode:Translate(Vector3(0.0, 0.0, 1.0) * MOVE_SPEED * timeStep)
     end
@@ -81,7 +74,6 @@ function  Application:MoveCamera(timeStep)
 end
 
 function GameInput(vehicle)
-    -- Get movement controls and assign them to the vehicle component. If UI has a focused element, clear controls
     if ui.focusElement == nil then
         SetKeyboardControls(vehicle)
         SetMouseControls(vehicle)
@@ -145,6 +137,9 @@ function HandlePostUpdate(eventType, eventData)
 
     local speed = vehicle.hullBody.linearVelocity:Length()
     UpdateSpeedMeter(speed)
+    UpdateGuidelineBox()
+
+    counter = counter + 1
 
     local dir = Quaternion(vehicleNode.rotation:YawAngle(), Vector3(0.0, 1.0, 0.0))
     dir = dir * Quaternion(vehicle.controls.yaw, Vector3(0.0, 1.0, 0.0))
@@ -162,6 +157,7 @@ function HandlePostUpdate(eventType, eventData)
     if result.body ~= nil then
         cameraTargetPos = cameraStartPos + cameraRay.direction * (result.distance - 0.5)
     end
+
     cameraNode.position = cameraTargetPos
     cameraNode.rotation = dir
 end
@@ -185,6 +181,22 @@ function CreateSpeedMeter()
     ui.root:AddChild(speedText)
 end
 
+function CreateGuidelineBox()
+    guideline = Text:new()
+
+    guideline.text = "100, 200 -> 100, 200"
+    guideline:SetFont(cache:GetResource("Font", "Fonts/Anonymous Pro.ttf"), 42)
+    guideline.color = Color.RED
+
+    local offset_X = 20
+    local offset_Y = 100
+    local pos_X = ui.root:GetWidth() - guideline:GetWidth() - offset_X
+    local pos_Y = ui.root:GetHeight() - guideline:GetHeight() - offset_Y
+    guideline:SetPosition(pos_X, pos_Y)
+
+    ui.root:AddChild(guideline)
+end
+
 function UpdateSpeedMeter(speedValue)
     speedText.text = math.floor(speedValue).."km/h"
     local offset_X = 20
@@ -192,4 +204,29 @@ function UpdateSpeedMeter(speedValue)
     local pos_X = ui.root:GetWidth() - speedText:GetWidth() - offset_X
     local pos_Y = ui.root:GetHeight() - speedText:GetHeight() - offset_Y
     speedText:SetPosition(pos_X, pos_Y)
+end
+
+function UpdateGuidelineBox()
+    local checkpoint = GetNearestPoint(vehicleNode.position, 0)
+    local nearestCheckpoint = GetNearestPoint(vehicleNode.position, 0)
+    local nextCheckpoint = GetNearestPoint(vehicleNode.position, 1)
+    checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
+    vehicleToCheckpointVector = vehicleNode.direction
+    cos = vectorsCos(checkpointsVector, vehicleNode.direction)
+
+    if cos < -0.3 then
+        turnInfo = 'TURN RIGHT'
+    elseif cos > 0.3 then
+        turnInfo = 'TURN LEFT'
+    else
+        turnInfo = ''
+    end
+
+
+    guideline.text = vehicleNode.position.x..', '..vehicleNode.position.z..' -> '..checkpoint.x..', '..checkpoint.z..' '..turnInfo
+    local offset_X = 20
+    local offset_Y = 100
+    local pos_X = ui.root:GetWidth() - guideline:GetWidth() - offset_X
+    local pos_Y = ui.root:GetHeight() - guideline:GetHeight() - offset_Y
+    guideline:SetPosition(pos_X, pos_Y)
 end
