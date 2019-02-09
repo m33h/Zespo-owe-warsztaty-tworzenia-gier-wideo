@@ -34,17 +34,17 @@ function InitControls()
     exitText.text = "EXIT"
     SubscribeToEvent(exitButton, "Released", "HandleExitButton")
 
-    local playButton = ui.root:CreateChild("Button", "PlayButton")
-    playButton:SetStyleAuto()
-    playButton.focusMode = FM_RESETFOCUS
-    playButton:SetSize(400, 50)
-    playButton:SetAlignment(HA_CENTER, VA_CENTER)
-    playButton:SetPosition(0, -50)
-    local playText = playButton:CreateChild("Text", "PlayText")
-    playText:SetAlignment(HA_CENTER, VA_CENTER)
-    playText:SetFont(font, 24)
-    playText.text = "PLAY"
-    SubscribeToEvent(playButton, "Released", "HandlePlayButton")
+    local raceButton = ui.root:CreateChild("Button", "RaceButton")
+    raceButton:SetStyleAuto()
+    raceButton.focusMode = FM_RESETFOCUS
+    raceButton:SetSize(400, 50)
+    raceButton:SetAlignment(HA_CENTER, VA_CENTER)
+    raceButton:SetPosition(0, -50)
+    local raceText = raceButton:CreateChild("Text", "RaceText")
+    raceText:SetAlignment(HA_CENTER, VA_CENTER)
+    raceText:SetFont(font, 24)
+    raceText.text = "RACE"
+    SubscribeToEvent(raceButton, "Released", "HandleRaceButton")
 
     local resumeButton = ui.root:CreateChild("Button", "ResumeButton")
     resumeButton:SetStyleAuto()
@@ -66,12 +66,12 @@ function HandleExitButton()
     engine:Exit()
 end
 
-function HandlePlayButton()
+function HandleRaceButton()
     input.mouseVisible = false
     ui.root:GetChild("ExitButton", true).visible = false
-    ui.root:GetChild("PlayButton", true).visible = false
+    ui.root:GetChild("RaceButton", true).visible = false
     ui.root:GetChild("Window", true).visible = false
-    ChangeState('PLAY_GAME')
+    ChangeState('START_GAME')
     Application:PlayGame()
 end
 

@@ -38,6 +38,7 @@ function Application:CreateScene()
 
     renderer:SetViewport(0, Viewport:new(scene_, camera))
     scene_:CreateScriptObject("Timer")
+    scene_:CreateScriptObject("StartTimer")
 end
 
 function Application:PlayGame()
@@ -108,7 +109,9 @@ function HandleUpdate(eventType, eventData)
         return
     end
 
-    if(GAME_STATE == 'PLAY_GAME') then
+    if(GAME_STATE == 'START_GAME') then
+--        ChangeState("PLAY_GAME")
+    elseif(GAME_STATE == 'PLAY_GAME') then
         GameInput(vehicle)
         TimerDemo()  --used to show timer functionality, it needs to be changed
     elseif(GAME_STATE == 'GAME_MENU') then

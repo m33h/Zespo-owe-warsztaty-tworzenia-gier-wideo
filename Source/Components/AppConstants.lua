@@ -9,7 +9,7 @@ ENGINE_POWER = 40.0
 DOWN_FORCE = 50.0
 MAX_WHEEL_ANGLE = 22.5
 
-GAME_STATE = "BEGIN_GAME"
+GAME_STATE = "START_MENU"
 
 function ChangeState(state)
     GAME_STATE = state

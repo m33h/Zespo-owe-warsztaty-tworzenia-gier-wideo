@@ -1,9 +1,48 @@
+StartTimer = {}
+
+function StartTimer:Start()
+    startTimerValue = 6
+    startTimeText = Text:new()
+    startTimeText.text = startTimerValue.."s"
+    startTimeText:SetFont(cache:GetResource("Font", "Fonts/Anonymous Pro.ttf"), 72)
+    startTimeText.color = Color.YELLOW
+    startTimeText:SetVisible(false)
+
+    local pos_X = ui.root:GetWidth() / 2 - startTimeText:GetWidth() / 2
+    local pos_Y = ui.root:GetHeight() / 2
+    startTimeText:SetPosition(pos_X, pos_Y)
+    ui.root:AddChild(startTimeText)
+end
+
+function StartTimer:FixedUpdate(timeStep)
+    if(GAME_STATE == 'START_GAME') then
+        startTimeText:SetVisible(true)
+        startTimerValue = startTimerValue - timeStep
+        startTimeText.text = math.floor(startTimerValue)
+        local pos_X = ui.root:GetWidth() / 2 - startTimeText:GetWidth() / 2
+        local pos_Y = ui.root:GetHeight() / 2
+        startTimeText:SetPosition(pos_X, pos_Y)
+    end
+    if (math.floor(startTimerValue) == 0) then
+        ChangeState("PLAY_GAME")
+        startTimerValue = startTimerValue - timeStep
+        startTimeText.text = "GO!"
+        local pos_X = ui.root:GetWidth() / 2 - startTimeText:GetWidth() / 2
+        local pos_Y = ui.root:GetHeight() / 2
+        startTimeText:SetPosition(pos_X, pos_Y)
+    end
+    if (startTimerValue <= 0) then
+        startTimeText:SetVisible(false)
+    end
+    print(startTimerValue)
+end
+
 Timer = {}
 
 function Timer:Start()
     timerValue = 0
     timeText = Text:new()
-    timeText.text = timerValue.."s"
+    timeText.text = timerValue..".00s"
     timeText:SetFont(cache:GetResource("Font", "Fonts/Anonymous Pro.ttf"), 42)
     timeText.color = Color.RED
 
