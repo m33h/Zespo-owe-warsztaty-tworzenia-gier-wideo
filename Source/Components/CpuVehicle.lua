@@ -116,9 +116,31 @@ function CpuVehicle:Save(serializer)
 end
 
 function CpuVehicle:FixedUpdate(timeStep)
+    local nearestCheckpoint = GetNearestPoint(self.node.position, 0)
+    local nextCheckpoint = GetNearestPoint(self.node.position, 1)
+    checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
+    cos = vectorsCos(checkpointsVector, self.node.direction)
+    sin = vectorsSin(checkpointsVector, self.node.direction)
 
-    local accelerator = 0.2
     local newSteering = 0.0
+
+    if sin > 0 and sin < 0.5 then
+        newSteering = 0.4
+    elseif sin >= 0.5 and sin < 0.8 then
+        newSteering = 0.8
+    elseif sin >= 0.8 then
+        newSteering = 1.0
+    elseif sin < 0 and sin > -0.5 then
+        newSteering = -0.4
+    elseif sin <= -0.5 then
+        newSteering = -1.0
+    elseif sin < -0.5 and sin > -0.8 then
+        newSteering = 0.8
+    elseif sin <= 0.8 then
+        newSteering = -1.0
+    end
+
+    local accelerator = 1.0
 
     if newSteering ~= 0.0 then
         self.frontLeftBody:Activate()

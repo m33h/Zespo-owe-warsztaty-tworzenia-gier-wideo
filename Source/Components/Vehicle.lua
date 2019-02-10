@@ -140,9 +140,9 @@ function Vehicle:FixedUpdate(timeStep)
     if newSteering ~= 0.0 then
         self.frontLeftBody:Activate()
         self.frontRightBody:Activate()
-        self.steering = self.steering * 0.95 + newSteering * 0.05
+        self.steering = self.steering * 0.9 + newSteering * 0.05
     else
-        self.steering = self.steering * 0.8 + newSteering * 0.2
+        self.steering = self.steering * 0.7 + newSteering * 0.2
     end
 
     local steeringRot = Quaternion(0.0, self.steering * MAX_WHEEL_ANGLE, 0.0)
