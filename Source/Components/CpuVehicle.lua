@@ -101,6 +101,8 @@ function CpuVehicle:PostInit()
 end
 
 function CpuVehicle:Start()
+    self.steering = 0.0
+    self.controls = Controls()
 end
 
 function CpuVehicle:Load(deserializer)
@@ -114,4 +116,31 @@ function CpuVehicle:Save(serializer)
 end
 
 function CpuVehicle:FixedUpdate(timeStep)
+
+    local accelerator = 0.2
+    local newSteering = 0.0
+
+    if newSteering ~= 0.0 then
+        self.frontLeftBody:Activate()
+        self.frontRightBody:Activate()
+        self.steering = self.steering * 0.95 + newSteering * 0.05
+    else
+        self.steering = self.steering * 0.8 + newSteering * 0.2
+    end
+
+    local steeringRot = Quaternion(0.0, self.steering * MAX_WHEEL_ANGLE, 0.0)
+    self.frontLeftAxis.otherAxis = steeringRot * Vector3(-1.0, 0.0, 0.0)
+    self.frontRightAxis.otherAxis = steeringRot * Vector3(1.0, 0.0, 0.0)
+
+    if accelerator ~= 0.0 then
+        local torqueVec = Vector3(ENGINE_POWER * accelerator, 0.0, 0.0)
+        local node = self.node
+        self.frontLeftBody:ApplyTorque(node.rotation * steeringRot * torqueVec)
+        self.frontRightBody:ApplyTorque(node.rotation * steeringRot * torqueVec)
+        self.rearLeftBody:ApplyTorque(node.rotation * torqueVec)
+        self.rearRightBody:ApplyTorque(node.rotation * torqueVec)
+    end
+
+    local localVelocity = self.hullBody.rotation:Inverse() * self.hullBody.linearVelocity
+    self.hullBody:ApplyForce(self.hullBody.rotation * Vector3(0.0, -1.0, 0.0) * Abs(localVelocity.z) * DOWN_FORCE)
 end
