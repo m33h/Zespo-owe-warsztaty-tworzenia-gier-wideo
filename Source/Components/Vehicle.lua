@@ -29,7 +29,31 @@ function Vehicle:Init(scene)
     self.frontRight = self:InitWheel("FrontRight", Vector3(0.6, -0.4, 0.3))
     self.rearLeft = self:InitWheel("RearLeft", Vector3(-0.6, -0.4, -0.3))
     self.rearRight = self:InitWheel("RearRight", Vector3(0.6, -0.4, -0.3))
+
+    self:SubscribeToEvents()
     self:PostInit()
+end
+
+function Vehicle:SubscribeToEvents()
+    print("Vehicle:SubscribeToEvents")
+
+    SubscribeToEvent(self.node, "NodeCollision", "HandleCollision")
+end
+
+function HandleCollision(eventType, eventData)
+    print("Vehicle:HandleCollision")
+
+    local otherNode = eventData["OtherNode"]:GetPtr("Node")
+
+    if nil ~= otherNode then
+        if otherNode:HasTag(TAG_POWERUP) then
+            print("Collected powerup!")
+            otherNode:SetEnabled(false)
+        elseif otherNode:HasTag(TAG_WEAPON) then
+            print("Collected weapon!")
+            otherNode:SetEnabled(false)
+        end
+    end
 end
 
 function Vehicle:InitWheel(name, offset)

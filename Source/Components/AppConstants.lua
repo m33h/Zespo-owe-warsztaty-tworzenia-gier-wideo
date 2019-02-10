@@ -11,6 +11,9 @@ MAX_WHEEL_ANGLE = 22.5
 
 GAME_STATE = "START_MENU"
 
+TAG_POWERUP = "PowerUp"
+TAG_WEAPON = "Weapon"
+
 function ChangeState(state)
     GAME_STATE = state
 end
