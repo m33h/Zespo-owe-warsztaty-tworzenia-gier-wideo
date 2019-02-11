@@ -1,11 +1,15 @@
 require "Source/Components/Timer"
 require "Source/Components/Menu"
 require "Source/Components/Vehicle"
+require "Source/Components/CpuVehicle"
 require "Source/Components/AppConstants"
 require "Source/Components/Debug"
 require "Source/Components/Guidelines"
 
 local vehicleNode
+local cpuVehicleNode
+local vehicle
+local cpuVehicle
 local collectedPowerupsCount = 0
 
 Application = ScriptObject()
@@ -14,7 +18,7 @@ function Start()
     print("Application:Start")
 
     Application:CreateScene()
-    Application:CreateVehicle()
+    Application:CreateVehicles()
     Application:SubscribeToEvents()
     InitializeMenu()
     CreateSpeedMeter()
@@ -48,14 +52,20 @@ function Application:PlayGame()
     Application:CreateViewport()
 end
 
-function  Application:CreateVehicle(vehiclesrc)
+function  Application:CreateVehicles(vehiclesrc)
     print("Application:CreateVehicle")
 
     vehicleNode = scene_:CreateChild("Vehicle")
-    vehicleNode.position = Vector3(100, 3.0, 200.0)
+    vehicleNode.position = Vector3(-20, 3.0, 200.0)
     vehicleNode:SetDirection(Vector3(-1,0,0))
+    cpuVehicleNode = scene_:CreateChild("CpuVehicle")
+    cpuVehicleNode.position = Vector3(-60, 3.0, 200.0)
+    cpuVehicleNode:SetDirection(Vector3(-1,0,0))
 
-    local vehicle = vehicleNode:CreateScriptObject("Vehicle")
+    cpuVehicle = cpuVehicleNode:CreateScriptObject("CpuVehicle")
+    vehicle = vehicleNode:CreateScriptObject("Vehicle")
+
+    cpuVehicle:Init(scene_)
     vehicle:Init(scene_)
 end
 
@@ -77,7 +87,7 @@ function  Application:MoveCamera(timeStep)
     end
 end
 
-function GameInput(vehicle)
+function GameInput()
     if ui.focusElement == nil then
         SetKeyboardControls(vehicle)
         SetMouseControls(vehicle)
@@ -103,10 +113,6 @@ function SetMouseControls(vehicle)
 end
 
 function HandleUpdate(eventType, eventData)
-    if vehicleNode == nil then
-        return
-    end
-
     local vehicle = vehicleNode:GetScriptObject()
     if vehicle == nil then
         return
@@ -136,7 +142,6 @@ function HandlePostUpdate(eventType, eventData)
         return
     end
 
-    local vehicle = vehicleNode:GetScriptObject()
     if vehicle == nil then
         return
     end
@@ -253,22 +258,23 @@ function UpdateSpeedMeter(speedValue)
 end
 
 function UpdateGuidelineBox()
-    local checkpoint = GetNearestPoint(vehicleNode.position, 0)
     local nearestCheckpoint = GetNearestPoint(vehicleNode.position, 0)
     local nextCheckpoint = GetNearestPoint(vehicleNode.position, 1)
     checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
-    vehicleToCheckpointVector = vehicleNode.direction
     cos = vectorsCos(checkpointsVector, vehicleNode.direction)
+    sin = vectorsSin(checkpointsVector, vehicleNode.direction)
 
-    if cos < -0.3 then
+    if cos < 0 then
+        turnInfo = 'TURN AROUND'
+    elseif sin > 0 and sin < 0.4 then
         turnInfo = 'TURN RIGHT'
-    elseif cos > 0.3 then
+    elseif sin < 0 and sin > -0.4 then
         turnInfo = 'TURN LEFT'
     else
         turnInfo = ''
     end
 
-    guideline.text = vehicleNode.position.x..', '..vehicleNode.position.z..' -> '..checkpoint.x..', '..checkpoint.z..' '..turnInfo
+    guideline.text = ''
     local offset_X = 20
     local offset_Y = 100
     local pos_X = ui.root:GetWidth() - guideline:GetWidth() - offset_X

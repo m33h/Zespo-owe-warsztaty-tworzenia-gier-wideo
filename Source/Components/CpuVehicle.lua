@@ -1,12 +1,12 @@
 require "Source/Components/AppConstants"
 
-Vehicle = ScriptObject()
+CpuVehicle = ScriptObject()
 
 local scene_
 
-function Vehicle:Init(scene)
+function CpuVehicle:Init(scene)
     print("Vehicle:Init")
-
+    --
     -- This function is called only from the main program when initially creating the vehicle, not on scene load
     self.scene_ = scene
     local node = self.node
@@ -25,38 +25,15 @@ function Vehicle:Init(scene)
     self.hullBody.linearDamping = 0.75
     self.hullBody.angularDamping = 0.5
     self.hullBody.collisionLayer = 1
-    self.frontLeft = self:InitWheel("FrontLeft", Vector3(-0.6, -0.4, 0.3))
-    self.frontRight = self:InitWheel("FrontRight", Vector3(0.6, -0.4, 0.3))
-    self.rearLeft = self:InitWheel("RearLeft", Vector3(-0.6, -0.4, -0.3))
-    self.rearRight = self:InitWheel("RearRight", Vector3(0.6, -0.4, -0.3))
-
-    self:SubscribeToEvents()
+    self.frontLeft = self:InitWheel("CpuFrontLeft", Vector3(-0.6, -0.4, 0.3))
+    self.frontRight = self:InitWheel("CpuFrontRight", Vector3(0.6, -0.4, 0.3))
+    self.rearLeft = self:InitWheel("CpuRearLeft", Vector3(-0.6, -0.4, -0.3))
+    self.rearRight = self:InitWheel("CpuRearRight", Vector3(0.6, -0.4, -0.3))
     self:PostInit()
 end
 
-function Vehicle:SubscribeToEvents()
-    print("Vehicle:SubscribeToEvents")
-    SubscribeToEvent(self.node, "NodeCollision", "HandleCollision")
-end
-
-function HandleCollision(eventType, eventData)
-    print("Vehicle:HandleCollision")
-    local otherNode = eventData["OtherNode"]:GetPtr("Node")
-
-    if nil ~= otherNode then
-        if otherNode:HasTag(TAG_POWERUP) then
-            print("Collected powerup!")
-            otherNode:SetEnabled(false)
-            SendEvent(EVENT_POWERUP_COLLECTED)
-        elseif otherNode:HasTag(TAG_WEAPON) then
-            print("Collected weapon!")
-            otherNode:SetEnabled(false)
-        end
-    end
-end
-
-function Vehicle:InitWheel(name, offset)
-    print("Vehicle:InitWheel")
+function CpuVehicle:InitWheel(name, offset)
+    print("CpuVehicle:InitWheel")
 
     -- Note: do not parent the wheel to the hull scene node. Instead create it on the root level and let the physics
     -- constraint keep it together
@@ -104,13 +81,13 @@ function Vehicle:InitWheel(name, offset)
     return wheelNode
 end
 
-function Vehicle:PostInit()
+function CpuVehicle:PostInit()
     print("Vehicle:PostInit")
 
-    self.frontLeft = self.scene_:GetChild("FrontLeft")
-    self.frontRight = self.scene_:GetChild("FrontRight")
-    self.rearLeft = self.scene_:GetChild("RearLeft")
-    self.rearRight = self.scene_:GetChild("RearRight")
+    self.frontLeft = self.scene_:GetChild("CpuFrontLeft")
+    self.frontRight = self.scene_:GetChild("CpuFrontRight")
+    self.rearLeft = self.scene_:GetChild("CpuRearLeft")
+    self.rearRight = self.scene_:GetChild("CpuRearRight")
 
     self.frontLeftAxis = self.frontLeft:GetComponent("Constraint")
     self.frontRightAxis = self.frontRight:GetComponent("Constraint")
@@ -123,49 +100,54 @@ function Vehicle:PostInit()
     self.rearRightBody = self.rearRight:GetComponent("RigidBody")
 end
 
-function Vehicle:Start()
-    print("Vehicle:Start")
-
-    -- Current left/right steering amount (-1 to 1.)
+function CpuVehicle:Start()
     self.steering = 0.0
-    -- Vehicle controls.
     self.controls = Controls()
 end
 
-function Vehicle:Load(deserializer)
+function CpuVehicle:Load(deserializer)
     self.controls.yaw = deserializer:ReadFloat()
     self.controls.pitch = deserializer:ReadFloat()
 end
 
-function Vehicle:Save(serializer)
+function CpuVehicle:Save(serializer)
     serializer:WriteFloat(self.controls.yaw)
     serializer:WriteFloat(self.controls.pitch)
 end
 
-function Vehicle:FixedUpdate(timeStep)
+function CpuVehicle:FixedUpdate(timeStep)
+    local nearestCheckpoint = GetNearestPoint(self.node.position, 0)
+    local nextCheckpoint = GetNearestPoint(self.node.position, 1)
+    checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
+    cos = vectorsCos(checkpointsVector, self.node.direction)
+    sin = vectorsSin(checkpointsVector, self.node.direction)
 
     local newSteering = 0.0
-    local accelerator = 0.0
-    if self.controls:IsDown(CTRL_LEFT) then
+
+    if sin > 0 and sin < 0.5 then
+        newSteering = 0.4
+    elseif sin >= 0.5 and sin < 0.8 then
+        newSteering = 0.8
+    elseif sin >= 0.8 then
+        newSteering = 1.0
+    elseif sin < 0 and sin > -0.5 then
+        newSteering = -0.4
+    elseif sin <= -0.5 then
+        newSteering = -1.0
+    elseif sin < -0.5 and sin > -0.8 then
+        newSteering = 0.8
+    elseif sin <= 0.8 then
         newSteering = -1.0
     end
-    if self.controls:IsDown(CTRL_RIGHT) then
-        newSteering = 1.0
-    end
-    if self.controls:IsDown(CTRL_FORWARD) then
-        accelerator = 1.0
-    end
-    if self.controls:IsDown(CTRL_BACK) then
-        accelerator = -0.5
-    end
 
-    -- When steering, wake up the wheel rigidbodies so that their orientation is updated
+    local accelerator = 1.0
+
     if newSteering ~= 0.0 then
         self.frontLeftBody:Activate()
         self.frontRightBody:Activate()
-        self.steering = self.steering * 0.9 + newSteering * 0.05
+        self.steering = self.steering * 0.95 + newSteering * 0.05
     else
-        self.steering = self.steering * 0.7 + newSteering * 0.2
+        self.steering = self.steering * 0.8 + newSteering * 0.2
     end
 
     local steeringRot = Quaternion(0.0, self.steering * MAX_WHEEL_ANGLE, 0.0)
@@ -173,7 +155,6 @@ function Vehicle:FixedUpdate(timeStep)
     self.frontRightAxis.otherAxis = steeringRot * Vector3(1.0, 0.0, 0.0)
 
     if accelerator ~= 0.0 then
-        -- Torques are applied in world space, so need to take the vehicle & wheel rotation into account
         local torqueVec = Vector3(ENGINE_POWER * accelerator, 0.0, 0.0)
         local node = self.node
         self.frontLeftBody:ApplyTorque(node.rotation * steeringRot * torqueVec)
@@ -182,7 +163,6 @@ function Vehicle:FixedUpdate(timeStep)
         self.rearRightBody:ApplyTorque(node.rotation * torqueVec)
     end
 
-    -- Apply downforce proportional to velocity
     local localVelocity = self.hullBody.rotation:Inverse() * self.hullBody.linearVelocity
     self.hullBody:ApplyForce(self.hullBody.rotation * Vector3(0.0, -1.0, 0.0) * Abs(localVelocity.z) * DOWN_FORCE)
 end
