@@ -6,6 +6,7 @@ require "Source/Components/Debug"
 require "Source/Components/Guidelines"
 
 local vehicleNode
+local collectedPowerupsCount = 0
 
 Application = ScriptObject()
 
@@ -18,11 +19,13 @@ function Start()
     InitializeMenu()
     CreateSpeedMeter()
     CreateGuidelineBox()
+    CreatePowerupsUi()
 end
 
 function Application:SubscribeToEvents()
     SubscribeToEvent("Update", "HandleUpdate")
     SubscribeToEvent("PostUpdate", "HandlePostUpdate")
+    SubscribeToEvent(EVENT_POWERUP_COLLECTED, "HandlePowerupCollected")
 end
 
 function Application:CreateScene()
@@ -168,6 +171,38 @@ end
 function HandleSceneUpdate(eventType, eventData)
 end
 
+function HandlePowerupCollected(eventType, eventData)
+    collectedPowerupsCount = collectedPowerupsCount + 1
+    UpdatePowerupsUi()
+end
+
+function CreatePowerupsUi()
+    local ammoIconSize = 100
+    local ammoIconMarginLeft = 20
+    local ammoIconMarginBottom = 20
+    local ammoIconPosX = ammoIconMarginLeft
+    local ammoIconPosY = ui.root:GetHeight() - ammoIconMarginBottom - ammoIconSize
+    local ammoTextPosX = ammoIconPosX + ammoIconSize + ammoIconMarginLeft
+    local ammoTextPosY = ammoIconPosY + ammoIconSize/4
+
+    local ammoIconFileName = fileSystem:GetProgramDir() .. "Assets/Textures/ammo.png"
+    local ammoTex = cache:GetResource("Texture2D", ammoIconFileName)
+
+    powerupsIcon = Sprite:new()
+    powerupsIcon.texture = ammoTex
+    powerupsIcon:SetPosition(ammoIconPosX, ammoIconPosY)
+    powerupsIcon:SetSize(ammoIconSize, ammoIconSize)
+
+    powerupsCountText = Text:new()
+    powerupsCountText.text = "0"
+    powerupsCountText:SetFont(cache:GetResource("Font", "Fonts/Anonymous Pro.ttf"), 42)
+    powerupsCountText.color = Color.WHITE
+    powerupsCountText:SetPosition(ammoTextPosX, ammoTextPosY)
+
+    ui.root:AddChild(powerupsCountText)
+    ui.root:AddChild(powerupsIcon)
+end
+
 function CreateSpeedMeter()
     speedText = Text:new()
 
@@ -200,6 +235,14 @@ function CreateGuidelineBox()
     ui.root:AddChild(guideline)
 end
 
+function UpdatePowerupsUi()
+    if(collectedPowerupsCount >= 0) then
+        powerupsCountText:SetText(collectedPowerupsCount)
+    else
+        powerupsCountText:SetText("0")
+    end
+end
+
 function UpdateSpeedMeter(speedValue)
     speedText.text = math.floor(speedValue).."km/h"
     local offset_X = 20
@@ -224,7 +267,6 @@ function UpdateGuidelineBox()
     else
         turnInfo = ''
     end
-
 
     guideline.text = vehicleNode.position.x..', '..vehicleNode.position.z..' -> '..checkpoint.x..', '..checkpoint.z..' '..turnInfo
     local offset_X = 20

@@ -14,6 +14,8 @@ GAME_STATE = "START_MENU"
 TAG_POWERUP = "PowerUp"
 TAG_WEAPON = "Weapon"
 
+EVENT_POWERUP_COLLECTED = "EVENT_POWERUP_COLLECTED"
+
 function ChangeState(state)
     GAME_STATE = state
 end

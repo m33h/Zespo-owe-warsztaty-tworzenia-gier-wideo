@@ -4,11 +4,11 @@
 	<attribute name="Time Scale" value="1" />
 	<attribute name="Smoothing Constant" value="50" />
 	<attribute name="Snap Threshold" value="5" />
-	<attribute name="Elapsed Time" value="4994.64" />
+	<attribute name="Elapsed Time" value="5014.08" />
 	<attribute name="Next Replicated Node ID" value="3" />
 	<attribute name="Next Replicated Component ID" value="9" />
-	<attribute name="Next Local Node ID" value="16777299" />
-	<attribute name="Next Local Component ID" value="16777825" />
+	<attribute name="Next Local Node ID" value="16777324" />
+	<attribute name="Next Local Component ID" value="16778044" />
 	<attribute name="Variables" />
 	<attribute name="Variable Names" value="powerup" />
 	<component type="Octree" id="1" />
@@ -18,14 +18,14 @@
 		<attribute name="Is Enabled" value="true" />
 		<attribute name="Name" value="" />
 		<attribute name="Tags" />
-		<attribute name="Position" value="49.3772 110.172 -446.339" />
+		<attribute name="Position" value="49.3772 221.672 -446.339" />
 		<attribute name="Rotation" value="0.893171 0.333635 0.12977 -0.272203" />
-		<attribute name="Scale" value="1 8.37236 1" />
+		<attribute name="Scale" value="1 5 1" />
 		<attribute name="Variables" />
 		<component type="Light" id="16777260">
 			<attribute name="Light Type" value="Directional" />
 			<attribute name="Specular Intensity" value="8" />
-			<attribute name="Temperature" value="3000" />
+			<attribute name="Temperature" value="1500" />
 			<attribute name="Range" value="100" />
 		</component>
 	</node>
@@ -43,8 +43,8 @@
 			<attribute name="Tags">
 				<string value="Box" />
 			</attribute>
-			<attribute name="Position" value="-84.4954 -14.5809 -19.5571" />
-			<attribute name="Rotation" value="1 2.69946e-07 6.53386e-05 -3.82141e-06" />
+			<attribute name="Position" value="-84.496 -14.5809 -19.5598" />
+			<attribute name="Rotation" value="1 2.45093e-07 7.15876e-05 3.17349e-06" />
 			<attribute name="Scale" value="7.40521 16.3072 86.9615" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="16777261">
@@ -56,9 +56,8 @@
 			</component>
 			<component type="CollisionShape" id="16777372" />
 			<component type="RigidBody" id="16777456">
-				<attribute name="Physics Rotation" value="1 2.69933e-07 6.53386e-05 -3.82494e-06" />
-				<attribute name="Physics Position" value="-42.2018 8.65357 16.6352" />
-				<attribute name="Mass" value="1" />
+				<attribute name="Physics Rotation" value="1 2.52243e-07 7.15719e-05 3.53357e-06" />
+				<attribute name="Physics Position" value="-42.2024 8.65357 16.6325" />
 			</component>
 		</node>
 		<node id="16777225">
@@ -67,8 +66,8 @@
 			<attribute name="Tags">
 				<string value="Box" />
 			</attribute>
-			<attribute name="Position" value="-62.1665 0.604252 -31.1187" />
-			<attribute name="Rotation" value="0.999997 1.18802e-05 0.00226596 -2.78492e-07" />
+			<attribute name="Position" value="-61.9498 0.603924 -32.5331" />
+			<attribute name="Rotation" value="0.999926 -8.97675e-07 0.0121763 1.62688e-07" />
 			<attribute name="Scale" value="88.6678 14.0625 6.61847" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="16777259">
@@ -80,9 +79,8 @@
 			</component>
 			<component type="CollisionShape" id="16777371" />
 			<component type="RigidBody" id="16777457">
-				<attribute name="Physics Rotation" value="0.999997 1.18712e-05 0.00226597 -2.77853e-07" />
-				<attribute name="Physics Position" value="-19.8729 23.8388 5.0736" />
-				<attribute name="Mass" value="1" />
+				<attribute name="Physics Rotation" value="0.999926 -9.58391e-07 0.0121763 1.61484e-07" />
+				<attribute name="Physics Position" value="-19.6562 23.8384 3.65922" />
 			</component>
 		</node>
 		<node id="16777253">
@@ -113,8 +111,8 @@
 			<attribute name="Tags">
 				<string value="Box" />
 			</attribute>
-			<attribute name="Position" value="-59.8436 1.72649 1.81787" />
-			<attribute name="Rotation" value="0.999174 2.29524e-06 -0.0406347 8.17196e-07" />
+			<attribute name="Position" value="-59.8497 1.72626 1.81623" />
+			<attribute name="Rotation" value="0.999173 9.81025e-08 -0.040666 3.28595e-07" />
 			<attribute name="Scale" value="87.0102 16.3072 7.84425" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="16777490">
@@ -126,9 +124,8 @@
 			</component>
 			<component type="CollisionShape" id="16777491" />
 			<component type="RigidBody" id="16777492">
-				<attribute name="Physics Rotation" value="0.999174 2.28928e-06 -0.0406347 8.17704e-07" />
-				<attribute name="Physics Position" value="-17.55 24.961 38.0102" />
-				<attribute name="Mass" value="1" />
+				<attribute name="Physics Rotation" value="0.999173 1.63343e-07 -0.040666 3.12388e-07" />
+				<attribute name="Physics Position" value="-17.5561 24.9608 38.0085" />
 			</component>
 		</node>
 		<node id="16777259">
@@ -159,8 +156,8 @@
 			<attribute name="Tags">
 				<string value="Box" />
 			</attribute>
-			<attribute name="Position" value="-26.097 -14.5809 -9.5287" />
-			<attribute name="Rotation" value="0.999997 6.78668e-08 0.00238127 -4.1999e-06" />
+			<attribute name="Position" value="-26.0965 -14.5809 -9.52508" />
+			<attribute name="Rotation" value="0.999997 6.9251e-08 0.00237287 3.48132e-06" />
 			<attribute name="Scale" value="7.40521 16.3072 86.9615" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="16777538">
@@ -172,9 +169,8 @@
 			</component>
 			<component type="CollisionShape" id="16777539" />
 			<component type="RigidBody" id="16777540">
-				<attribute name="Physics Rotation" value="0.999997 6.80789e-08 0.00238127 -4.225e-06" />
-				<attribute name="Physics Position" value="16.1966 8.6536 26.6636" />
-				<attribute name="Mass" value="1" />
+				<attribute name="Physics Rotation" value="0.999997 6.60054e-08 0.00237291 3.43173e-06" />
+				<attribute name="Physics Position" value="16.1971 8.65359 26.6672" />
 			</component>
 		</node>
 		<node id="16777267">
@@ -226,9 +222,9 @@
 		<attribute name="Is Enabled" value="true" />
 		<attribute name="Name" value="Powerups" />
 		<attribute name="Tags" />
-		<attribute name="Position" value="0 0 0" />
+		<attribute name="Position" value="0 0 -5.5" />
 		<attribute name="Rotation" value="1 0 0 0" />
-		<attribute name="Scale" value="1 1 1" />
+		<attribute name="Scale" value="0.5 0.5 0.5" />
 		<attribute name="Variables" />
 		<node id="16777288">
 			<attribute name="Is Enabled" value="true" />
@@ -236,8 +232,8 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="8 1 -83" />
-			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Position" value="-30.0103 4.5 -130.003" />
+			<attribute name="Rotation" value="1 -0.000109908 2.56527e-08 0.000827703" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
 				<variant hash="1991183424" type="Bool" value="false" />
@@ -253,8 +249,11 @@
 				<attribute name="Collision Margin" value="0.01" />
 			</component>
 			<component type="RigidBody" id="16777786">
-				<attribute name="Physics Position" value="8 1 -83" />
+				<attribute name="Physics Rotation" value="1 -0.000110029 2.56669e-08 0.000828479" />
+				<attribute name="Physics Position" value="-15.0051 2.25 -70.5016" />
 				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="-0.000455636 0 6.79807e-05" />
+				<attribute name="Angular Velocity" value="-2.02802e-05 -9.43159e-11 0.000130182" />
 				<attribute name="Linear Rest Threshold" value="0" />
 			</component>
 		</node>
@@ -264,8 +263,8 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="-5 1 -17.5" />
-			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Position" value="-5.01466 4.5 -17.4987" />
+			<attribute name="Rotation" value="0.999999 0.000125581 1.32835e-08 0.00123788" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
 				<variant hash="1991183424" type="Bool" value="false" />
@@ -281,36 +280,11 @@
 				<attribute name="Collision Margin" value="0.01" />
 			</component>
 			<component type="RigidBody" id="16777789">
-				<attribute name="Physics Position" value="-5 1 -17.5" />
+				<attribute name="Physics Rotation" value="0.999999 0.000125692 1.32949e-08 0.00123906" />
+				<attribute name="Physics Position" value="-2.50733 2.25 -14.2493" />
 				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Rest Threshold" value="0" />
-			</component>
-		</node>
-		<node id="16777290">
-			<attribute name="Is Enabled" value="true" />
-			<attribute name="Name" value="" />
-			<attribute name="Tags">
-				<string value="PowerUp" />
-			</attribute>
-			<attribute name="Position" value="-11 1 2" />
-			<attribute name="Rotation" value="1 0 0 0" />
-			<attribute name="Scale" value="7 7 7" />
-			<attribute name="Variables">
-				<variant hash="1991183424" type="Bool" value="false" />
-			</attribute>
-			<component type="StaticModel" id="16777790">
-				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
-				<attribute name="Material" value="Material;Materials/Stone.xml" />
-				<attribute name="Cast Shadows" value="true" />
-			</component>
-			<component type="CollisionShape" id="16777791">
-				<attribute name="Shape Type" value="Sphere" />
-				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
-				<attribute name="Collision Margin" value="0.01" />
-			</component>
-			<component type="RigidBody" id="16777792">
-				<attribute name="Physics Position" value="-11 1 2" />
-				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="-0.000688543 4.29153e-06 -6.42275e-05" />
+				<attribute name="Angular Velocity" value="1.86107e-05 2.45971e-10 0.000196727" />
 				<attribute name="Linear Rest Threshold" value="0" />
 			</component>
 		</node>
@@ -320,8 +294,8 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="43 1 26.5" />
-			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Position" value="84.971 4.5 26.4849" />
+			<attribute name="Rotation" value="0.999997 -0.00095986 6.10818e-09 0.0021438" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
 				<variant hash="1991183424" type="Bool" value="false" />
@@ -337,8 +311,11 @@
 				<attribute name="Collision Margin" value="0.01" />
 			</component>
 			<component type="RigidBody" id="16777795">
-				<attribute name="Physics Position" value="43 1 26.5" />
+				<attribute name="Physics Rotation" value="0.999997 -0.000960794 6.11205e-09 0.0021459" />
+				<attribute name="Physics Position" value="42.4855 2.25 7.74245" />
 				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="-0.00123132 0 -0.000705285" />
+				<attribute name="Angular Velocity" value="-0.000156584 2.64822e-09 0.000351805" />
 				<attribute name="Linear Rest Threshold" value="0" />
 			</component>
 		</node>
@@ -348,8 +325,8 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="-33 1 -43.5" />
-			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Position" value="-61.0213 4.5 -43.5255" />
+			<attribute name="Rotation" value="0.999997 -0.001821 6.3882e-08 0.0016094" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
 				<variant hash="1991183424" type="Bool" value="false" />
@@ -365,8 +342,11 @@
 				<attribute name="Collision Margin" value="0.01" />
 			</component>
 			<component type="RigidBody" id="16777798">
-				<attribute name="Physics Position" value="-33 1 -43.5" />
+				<attribute name="Physics Rotation" value="0.999997 -0.00182288 6.39318e-08 0.00161104" />
+				<attribute name="Physics Position" value="-30.5107 2.25 -27.2628" />
 				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="-0.000963887 5.72205e-06 -0.00123248" />
+				<attribute name="Angular Velocity" value="-0.000314733 3.3022e-09 0.000275396" />
 				<attribute name="Linear Rest Threshold" value="0" />
 			</component>
 		</node>
@@ -376,8 +356,8 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="-22.5 1 -28" />
-			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Position" value="-22.5094 4.5 149.979" />
+			<attribute name="Rotation" value="0.999998 -0.00157645 5.57688e-08 0.000858309" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
 				<variant hash="1991183424" type="Bool" value="false" />
@@ -393,8 +373,11 @@
 				<attribute name="Collision Margin" value="0.01" />
 			</component>
 			<component type="RigidBody" id="16777801">
-				<attribute name="Physics Position" value="-22.5 1 -28" />
+				<attribute name="Physics Rotation" value="0.999998 -0.00157801 5.58398e-08 0.000859113" />
+				<attribute name="Physics Position" value="-11.2547 2.25 69.4896" />
 				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="-0.000472417 5.72205e-06 -0.00108026" />
+				<attribute name="Angular Velocity" value="-0.000261227 4.63107e-10 0.000134976" />
 				<attribute name="Linear Rest Threshold" value="0" />
 			</component>
 		</node>
@@ -404,8 +387,8 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="54.5 1 -6" />
-			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Position" value="93.4987 4.5 -50.0322" />
+			<attribute name="Rotation" value="0.999998 -0.00212689 2.08181e-07 -8.477e-06" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
 				<variant hash="1991183424" type="Bool" value="false" />
@@ -421,8 +404,11 @@
 				<attribute name="Collision Margin" value="0.01" />
 			</component>
 			<component type="RigidBody" id="16777804">
-				<attribute name="Physics Position" value="54.5 1 -6" />
+				<attribute name="Physics Rotation" value="0.999998 -0.00212906 2.0829e-07 -8.52488e-06" />
+				<attribute name="Physics Position" value="46.7494 2.25 -30.5161" />
 				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="2.81151e-05 -1.432e-05 -0.00143185" />
+				<attribute name="Angular Velocity" value="-0.000365468 4.34751e-09 -8.0329e-06" />
 				<attribute name="Linear Rest Threshold" value="0" />
 			</component>
 		</node>
@@ -432,8 +418,8 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="16 1 -84.5" />
-			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Position" value="101.014 4.5 -118.524" />
+			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
 				<variant hash="1991183424" type="Bool" value="false" />
@@ -449,8 +435,11 @@
 				<attribute name="Collision Margin" value="0.01" />
 			</component>
 			<component type="RigidBody" id="16777807">
-				<attribute name="Physics Position" value="16 1 -84.5" />
+				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
+				<attribute name="Physics Position" value="50.507 2.25 -64.7619" />
 				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
+				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
 				<attribute name="Linear Rest Threshold" value="0" />
 			</component>
 		</node>
@@ -460,8 +449,8 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="12.5 1 -74" />
-			<attribute name="Rotation" value="1 0 0 0" />
+			<attribute name="Position" value="12.5093 4.5 -129.015" />
+			<attribute name="Rotation" value="0.999999 -0.00107913 2.51943e-08 -0.000522963" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
 				<variant hash="1991183424" type="Bool" value="false" />
@@ -477,8 +466,290 @@
 				<attribute name="Collision Margin" value="0.01" />
 			</component>
 			<component type="RigidBody" id="16777810">
-				<attribute name="Physics Position" value="12.5 1 -74" />
+				<attribute name="Physics Rotation" value="0.999999 -0.0010802 2.5087e-08 -0.000523391" />
+				<attribute name="Physics Position" value="6.25465 2.25 -70.0075" />
 				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="0.000251175 2.87592e-06 -0.000855458" />
+				<attribute name="Angular Velocity" value="-0.000178889 -1.88941e-09 -7.17644e-05" />
+				<attribute name="Linear Rest Threshold" value="0" />
+			</component>
+		</node>
+		<node id="16777314">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags">
+				<string value="PowerUp" />
+			</attribute>
+			<attribute name="Position" value="-30.986 4.5 404.476" />
+			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
+			<attribute name="Scale" value="7 7 7" />
+			<attribute name="Variables">
+				<variant hash="1991183424" type="Bool" value="false" />
+			</attribute>
+			<component type="StaticModel" id="16778005">
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Material" value="Material;Materials/Stone.xml" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+			<component type="CollisionShape" id="16778006">
+				<attribute name="Shape Type" value="Sphere" />
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Collision Margin" value="0.01" />
+			</component>
+			<component type="RigidBody" id="16778007">
+				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
+				<attribute name="Physics Position" value="-15.493 2.25 196.738" />
+				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
+				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Linear Rest Threshold" value="0" />
+			</component>
+		</node>
+		<node id="16777315">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags">
+				<string value="PowerUp" />
+			</attribute>
+			<attribute name="Position" value="157.014 4.5 350.476" />
+			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
+			<attribute name="Scale" value="7 7 7" />
+			<attribute name="Variables">
+				<variant hash="1991183424" type="Bool" value="false" />
+			</attribute>
+			<component type="StaticModel" id="16778008">
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Material" value="Material;Materials/Stone.xml" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+			<component type="CollisionShape" id="16778009">
+				<attribute name="Shape Type" value="Sphere" />
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Collision Margin" value="0.01" />
+			</component>
+			<component type="RigidBody" id="16778010">
+				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
+				<attribute name="Physics Position" value="78.507 2.25 169.738" />
+				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
+				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Linear Rest Threshold" value="0" />
+			</component>
+		</node>
+		<node id="16777316">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags">
+				<string value="PowerUp" />
+			</attribute>
+			<attribute name="Position" value="101.014 4.5 318.476" />
+			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
+			<attribute name="Scale" value="7 7 7" />
+			<attribute name="Variables">
+				<variant hash="1991183424" type="Bool" value="false" />
+			</attribute>
+			<component type="StaticModel" id="16778011">
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Material" value="Material;Materials/Stone.xml" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+			<component type="CollisionShape" id="16778012">
+				<attribute name="Shape Type" value="Sphere" />
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Collision Margin" value="0.01" />
+			</component>
+			<component type="RigidBody" id="16778013">
+				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
+				<attribute name="Physics Position" value="50.507 2.25 153.738" />
+				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
+				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Linear Rest Threshold" value="0" />
+			</component>
+		</node>
+		<node id="16777317">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags">
+				<string value="PowerUp" />
+			</attribute>
+			<attribute name="Position" value="-248.986 4.5 100.476" />
+			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
+			<attribute name="Scale" value="7 7 7" />
+			<attribute name="Variables">
+				<variant hash="1991183424" type="Bool" value="false" />
+			</attribute>
+			<component type="StaticModel" id="16778014">
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Material" value="Material;Materials/Stone.xml" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+			<component type="CollisionShape" id="16778015">
+				<attribute name="Shape Type" value="Sphere" />
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Collision Margin" value="0.01" />
+			</component>
+			<component type="RigidBody" id="16778016">
+				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
+				<attribute name="Physics Position" value="-124.493 2.25 44.738" />
+				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
+				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Linear Rest Threshold" value="0" />
+			</component>
+		</node>
+		<node id="16777318">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags">
+				<string value="PowerUp" />
+			</attribute>
+			<attribute name="Position" value="46.014 4.5 -199.524" />
+			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
+			<attribute name="Scale" value="7 7 7" />
+			<attribute name="Variables">
+				<variant hash="1991183424" type="Bool" value="false" />
+			</attribute>
+			<component type="StaticModel" id="16778017">
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Material" value="Material;Materials/Stone.xml" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+			<component type="CollisionShape" id="16778018">
+				<attribute name="Shape Type" value="Sphere" />
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Collision Margin" value="0.01" />
+			</component>
+			<component type="RigidBody" id="16778019">
+				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
+				<attribute name="Physics Position" value="23.007 2.25 -105.262" />
+				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
+				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Linear Rest Threshold" value="0" />
+			</component>
+		</node>
+		<node id="16777319">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags">
+				<string value="PowerUp" />
+			</attribute>
+			<attribute name="Position" value="57.014 4.5 -140.524" />
+			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
+			<attribute name="Scale" value="7 7 7" />
+			<attribute name="Variables">
+				<variant hash="1991183424" type="Bool" value="false" />
+			</attribute>
+			<component type="StaticModel" id="16778020">
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Material" value="Material;Materials/Stone.xml" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+			<component type="CollisionShape" id="16778021">
+				<attribute name="Shape Type" value="Sphere" />
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Collision Margin" value="0.01" />
+			</component>
+			<component type="RigidBody" id="16778022">
+				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
+				<attribute name="Physics Position" value="28.507 2.25 -75.762" />
+				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
+				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Linear Rest Threshold" value="0" />
+			</component>
+		</node>
+		<node id="16777320">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags">
+				<string value="PowerUp" />
+			</attribute>
+			<attribute name="Position" value="147.014 4.5 -282.524" />
+			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
+			<attribute name="Scale" value="7 7 7" />
+			<attribute name="Variables">
+				<variant hash="1991183424" type="Bool" value="false" />
+			</attribute>
+			<component type="StaticModel" id="16778023">
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Material" value="Material;Materials/Stone.xml" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+			<component type="CollisionShape" id="16778024">
+				<attribute name="Shape Type" value="Sphere" />
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Collision Margin" value="0.01" />
+			</component>
+			<component type="RigidBody" id="16778025">
+				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
+				<attribute name="Physics Position" value="73.507 2.25 -146.762" />
+				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
+				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Linear Rest Threshold" value="0" />
+			</component>
+		</node>
+		<node id="16777321">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags">
+				<string value="PowerUp" />
+			</attribute>
+			<attribute name="Position" value="181.014 4.5 -125.524" />
+			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
+			<attribute name="Scale" value="7 7 7" />
+			<attribute name="Variables">
+				<variant hash="1991183424" type="Bool" value="false" />
+			</attribute>
+			<component type="StaticModel" id="16778026">
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Material" value="Material;Materials/Stone.xml" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+			<component type="CollisionShape" id="16778027">
+				<attribute name="Shape Type" value="Sphere" />
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Collision Margin" value="0.01" />
+			</component>
+			<component type="RigidBody" id="16778028">
+				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
+				<attribute name="Physics Position" value="90.507 2.25 -68.262" />
+				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
+				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Linear Rest Threshold" value="0" />
+			</component>
+		</node>
+		<node id="16777322">
+			<attribute name="Is Enabled" value="true" />
+			<attribute name="Name" value="" />
+			<attribute name="Tags">
+				<string value="PowerUp" />
+			</attribute>
+			<attribute name="Position" value="161.014 4.5 103.476" />
+			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
+			<attribute name="Scale" value="7 7 7" />
+			<attribute name="Variables">
+				<variant hash="1991183424" type="Bool" value="false" />
+			</attribute>
+			<component type="StaticModel" id="16778029">
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Material" value="Material;Materials/Stone.xml" />
+				<attribute name="Cast Shadows" value="true" />
+			</component>
+			<component type="CollisionShape" id="16778030">
+				<attribute name="Shape Type" value="Sphere" />
+				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
+				<attribute name="Collision Margin" value="0.01" />
+			</component>
+			<component type="RigidBody" id="16778031">
+				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
+				<attribute name="Physics Position" value="80.507 2.25 46.238" />
+				<attribute name="Mass" value="0.1" />
+				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
+				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
 				<attribute name="Linear Rest Threshold" value="0" />
 			</component>
 		</node>

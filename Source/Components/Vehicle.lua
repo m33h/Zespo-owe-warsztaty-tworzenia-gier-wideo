@@ -36,19 +36,18 @@ end
 
 function Vehicle:SubscribeToEvents()
     print("Vehicle:SubscribeToEvents")
-
     SubscribeToEvent(self.node, "NodeCollision", "HandleCollision")
 end
 
 function HandleCollision(eventType, eventData)
     print("Vehicle:HandleCollision")
-
     local otherNode = eventData["OtherNode"]:GetPtr("Node")
 
     if nil ~= otherNode then
         if otherNode:HasTag(TAG_POWERUP) then
             print("Collected powerup!")
             otherNode:SetEnabled(false)
+            SendEvent(EVENT_POWERUP_COLLECTED)
         elseif otherNode:HasTag(TAG_WEAPON) then
             print("Collected weapon!")
             otherNode:SetEnabled(false)
