@@ -1,65 +1,81 @@
 checkpoints = {
-    Vector3(80,1.4,200),
-    Vector3(60,1.4,200),
-    Vector3(40,1.4,200),
-    Vector3(20,1.4,200),
-    Vector3(0,1.4,200),
-    Vector3(-20,1.4,200),
-    Vector3(-40,1.4,200),
-    Vector3(-60,1.4,200),
-    Vector3(-80,1.4,200),
-    Vector3(-100,1.4,200),
-    Vector3(-100,1.4,180),
-    Vector3(-100,1.4,160),
-    Vector3(-100,1.4,140),
-    Vector3(-100,1.4,120),
-    Vector3(-100,1.4,100),
-    Vector3(-100,1.4,80),
-    Vector3(-100,1.4,60),
-    Vector3(-100,1.4,40),
-    Vector3(-100,1.4,20),
-    Vector3(-100,1.4,0),
-    Vector3(-100,1.4,-20),
-    Vector3(-100,1.4,-40),
-    Vector3(-100,1.4,-60),
-    Vector3(-100,1.4,-80),
-    Vector3(-100,1.4,-100),
-    Vector3(-100,1.4,-120),
-    Vector3(-100,1.4,-140),
-    Vector3(-100,1.4,-160),
-    Vector3(-100,1.4,-180),
-    Vector3(-100,1.4,-200),
-    Vector3(-80,1.4,-200),
-    Vector3(-60,1.4,-200),
-    Vector3(-40,1.4,-200),
-    Vector3(-20,1.4,-200),
-    Vector3(0,1.4,-200),
-    Vector3(20,1.4,-200),
-    Vector3(40,1.4,-200),
-    Vector3(60,1.4,-200),
-    Vector3(80,1.4,-200),
-    Vector3(100,1.4,-200),
-    Vector3(100,1.4,-180),
-    Vector3(100,1.4,-160),
-    Vector3(100,1.4,-140),
-    Vector3(100,1.4,-120),
-    Vector3(100,1.4,-100),
-    Vector3(100,1.4,-80),
-    Vector3(100,1.4,-60),
-    Vector3(100,1.4,-40),
-    Vector3(100,1.4,-20),
-    Vector3(100,1.4,0),
-    Vector3(100,1.4,20),
-    Vector3(100,1.4,40),
-    Vector3(100,1.4,60),
-    Vector3(100,1.4,60),
+    { active = false, point = Vector3(80,1.4,200) },
+    { active = true, point = Vector3(60,1.4,200) },
+    { active = false, point = Vector3(40,1.4,200) },
+    { active = false, point = Vector3(20,1.4,200) },
+    { active = false, point = Vector3(0,1.4,200) },
+    { active = false, point = Vector3(-20,1.4,200) },
+    { active = false, point = Vector3(-40,1.4,200) },
+    { active = false, point = Vector3(-60,1.4,200) },
+    { active = false, point = Vector3(-80,1.4,200) },
+    { active = false, point = Vector3(-100,1.4,200) },
+    { active = false, point = Vector3(-100,1.4,180) },
+    { active = false, point = Vector3(-100,1.4,160) },
+    { active = false, point = Vector3(-100,1.4,140) },
+    { active = false, point = Vector3(-100,1.4,120) },
+    { active = false, point = Vector3(-100,1.4,100) },
+    { active = false, point = Vector3(-100,1.4,80) },
+    { active = false, point = Vector3(-100,1.4,60) },
+    { active = false, point = Vector3(-100,1.4,40) },
+    { active = false, point = Vector3(-100,1.4,20) },
+    { active = false, point = Vector3(-100,1.4,0) },
+    { active = false, point = Vector3(-100,1.4,-20) },
+    { active = false, point = Vector3(-100,1.4,-40) },
+    { active = false, point = Vector3(-100,1.4,-60) },
+    { active = false, point = Vector3(-100,1.4,-80) },
+    { active = false, point = Vector3(-100,1.4,-100) },
+    { active = false, point = Vector3(-100,1.4,-120) },
+    { active = false, point = Vector3(-100,1.4,-140) },
+    { active = false, point = Vector3(-100,1.4,-160) },
+    { active = false, point = Vector3(-100,1.4,-180) },
+    { active = false, point = Vector3(-100,1.4,-200) },
+    { active = false, point = Vector3(-80,1.4,-200) },
+    { active = false, point = Vector3(-60,1.4,-200) },
+    { active = false, point = Vector3(-40,1.4,-200) },
+    { active = false, point = Vector3(-20,1.4,-200) },
+    { active = false, point = Vector3(0,1.4,-200) },
+    { active = false, point = Vector3(20,1.4,-200) },
+    { active = false, point = Vector3(40,1.4,-200) },
+    { active = false, point = Vector3(60,1.4,-200) },
+    { active = false, point = Vector3(80,1.4,-200) },
+    { active = false, point = Vector3(100,1.4,-200) },
+    { active = false, point = Vector3(100,1.4,-180) },
+    { active = false, point = Vector3(100,1.4,-160) },
+    { active = false, point = Vector3(100,1.4,-140) },
+    { active = false, point = Vector3(100,1.4,-120) },
+    { active = false, point = Vector3(100,1.4,-100) },
+    { active = false, point = Vector3(100,1.4,-80) },
+    { active = false, point = Vector3(100,1.4,-60) },
+    { active = false, point = Vector3(100,1.4,-40) },
+    { active = false, point = Vector3(100,1.4,-20) },
+    { active = false, point = Vector3(100,1.4,0) },
+    { active = false, point = Vector3(100,1.4,20) },
+    { active = false, point = Vector3(100,1.4,40) },
+    { active = false, point = Vector3(100,1.4,60) },
+    { active = false, point = Vector3(100,1.4,60) }
 }
 
-function GetNearestPoint(vector, order)
+function GetActiveCheckpoint(order)
+    for k = 1, #checkpoints do
+        if(checkpoints[k].active == true) then
+            return checkpoints[k+order]
+        end
+    end
+end
+
+function MarkNextCheckpointActive()
+    currentCheckpoint = GetActiveCheckpoint(0)
+    nextCheckpoint = GetActiveCheckpoint(1)
+
+    currentCheckpoint.active = false
+    nextCheckpoint.active = true
+end
+
+function GetNearestCheckpoint(vector, order)
     local minIndex = 1
     local minDistance = 1000000
     for k = 1, #checkpoints do
-        dist = (checkpoints[k] - vector):Length()
+        dist = (checkpoints[k].point - vector):Length()
         if(dist < minDistance) then
             minDistance = dist
             minIndex = k

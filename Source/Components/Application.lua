@@ -56,10 +56,10 @@ function  Application:CreateVehicles(vehiclesrc)
     print("Application:CreateVehicle")
 
     vehicleNode = scene_:CreateChild("Vehicle")
-    vehicleNode.position = Vector3(-20, 3.0, 200.0)
+    vehicleNode.position = Vector3(80, 3.0, 160.0)
     vehicleNode:SetDirection(Vector3(-1,0,0))
     cpuVehicleNode = scene_:CreateChild("CpuVehicle")
-    cpuVehicleNode.position = Vector3(-60, 3.0, 200.0)
+    cpuVehicleNode.position = Vector3(80, 3.0, 200.0)
     cpuVehicleNode:SetDirection(Vector3(-1,0,0))
 
     cpuVehicle = cpuVehicleNode:CreateScriptObject("CpuVehicle")
@@ -144,6 +144,11 @@ function HandlePostUpdate(eventType, eventData)
 
     if vehicle == nil then
         return
+    end
+
+    if((vehicleNode.position - GetActiveCheckpoint(0).point):Length() < 10) then
+        GetActiveCheckpoint(1).active = true
+        GetActiveCheckpoint(0).active = false
     end
 
     local speed = vehicle.hullBody.linearVelocity:Length()
@@ -258,11 +263,16 @@ function UpdateSpeedMeter(speedValue)
 end
 
 function UpdateGuidelineBox()
-    local nearestCheckpoint = GetNearestPoint(vehicleNode.position, 0)
-    local nextCheckpoint = GetNearestPoint(vehicleNode.position, 1)
-    checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
-    cos = vectorsCos(checkpointsVector, vehicleNode.direction)
-    sin = vectorsSin(checkpointsVector, vehicleNode.direction)
+    --local nearestCheckpoint = GetActiveCheckpoint(0).point
+    --local nextCheckpoint = GetActiveCheckpoint( 1).point
+    --checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
+    --cos = vectorsCos(checkpointsVector, vehicleNode.direction)
+    --sin = vectorsSin(checkpointsVector, vehicleNode.direction)
+    --distanceToCheckpoint = (vehicleNode.position - nearestCheckpoint):Length()
+    --
+    --if distanceToCheckpoint < 10 then
+    --    MarkNextCheckpointActive()
+    --end
 
     if cos < 0 then
         turnInfo = 'TURN AROUND'
@@ -274,7 +284,7 @@ function UpdateGuidelineBox()
         turnInfo = ''
     end
 
-    guideline.text = ''
+    guideline.text = '' --vehicleNode.position.x..vehicleNode.position.z..' distance: '..distanceToCheckpoint
     local offset_X = 20
     local offset_Y = 100
     local pos_X = ui.root:GetWidth() - guideline:GetWidth() - offset_X
