@@ -168,6 +168,7 @@ function Vehicle:FixedUpdate(timeStep)
         self.steering = self.steering * 0.7 + newSteering * 0.2
     end
 
+
     local steeringRot = Quaternion(0.0, self.steering * MAX_WHEEL_ANGLE, 0.0)
     self.frontLeftAxis.otherAxis = steeringRot * Vector3(-1.0, 0.0, 0.0)
     self.frontRightAxis.otherAxis = steeringRot * Vector3(1.0, 0.0, 0.0)

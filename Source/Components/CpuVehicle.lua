@@ -118,8 +118,8 @@ end
 
 function CpuVehicle:FixedUpdate(timeStep)
     if (GAME_STATE == 'PLAY_GAME') then
-        local nearestCheckpoint = GetNearestPoint(self.node.position, 0)
-        local nextCheckpoint = GetNearestPoint(self.node.position, 1)
+        local nearestCheckpoint = GetNearestCheckpoint(self.node.position, 0).point
+        local nextCheckpoint = GetNearestCheckpoint(self.node.position, 1).point
         checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
         cos = vectorsCos(checkpointsVector, self.node.direction)
         sin = vectorsSin(checkpointsVector, self.node.direction)
@@ -168,17 +168,18 @@ function CpuVehicle:FixedUpdate(timeStep)
         local localVelocity = self.hullBody.rotation:Inverse() * self.hullBody.linearVelocity
         self.hullBody:ApplyForce(self.hullBody.rotation * Vector3(0.0, -1.0, 0.0) * Abs(localVelocity.z) * DOWN_FORCE)
     end
+
     --local nearestCheckpoint = GetActiveCheckpoint(0).point
     --local nextCheckpoint = GetActiveCheckpoint( 1).point
     --checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
     --vectorToNextCheckpoint = (nextCheckpoint - self.node.position):Normalized()
-    --cos = vectorsCos(checkpointsVector, self.node.direction)
-    --sin = vectorsSin(checkpointsVector, self.node.direction)
-    ----cos = vectorsCos(checkpointsVector, vectorToNextCheckpoint)
-    ----sin = vectorsSin(checkpointsVector, vectorToNextCheckpoint)
+    ----cos = vectorsCos(checkpointsVector, self.node.direction)
+    ----sin = vectorsSin(checkpointsVector, self.node.direction)
+    --cos = vectorsCos(checkpointsVector, vectorToNextCheckpoint)
+    --sin = vectorsSin(checkpointsVector, vectorToNextCheckpoint)
     --distanceToCheckpoint = (self.node.position - nearestCheckpoint):Length()
     --
-    --print('distance: '..distanceToCheckpoint)
+    ----print('distance: '..distanceToCheckpoint)
     --
     --if distanceToCheckpoint < 3 then
     --    MarkNextCheckpointActive()
@@ -187,21 +188,21 @@ function CpuVehicle:FixedUpdate(timeStep)
     --
     --local newSteering = 0.0
     --
-    --if sin > 0.1 and sin < 0.4 then
-    --    newSteering = 0.2
+    --if sin > 0 and sin < 0.4 then
+    --    newSteering = 0.4
     --elseif sin > 0.4 then
     --    newSteering = -sin
-    --elseif sin < -0.1 and sin > -0.4 then
-    --    newSteering = -0.2
+    --elseif sin < 0 and sin > -0.4 then
+    --    newSteering = -0.4
     --elseif sin < -0.4 then
     --    newSteering = sin
     --else
     --    newSteering = 0.0
     --end
     --
-    --print('sin: '..sin..' cos: '..cos)
-    --print('position: '..self.node.position.x..' '..self.node.position.z)
-    --print('\n')
+    ----print('sin: '..sin..' cos: '..cos)
+    ----print('position: '..self.node.position.x..' '..self.node.position.z)
+    ----print('\n')
     --
     --local accelerator = 1.0
     --

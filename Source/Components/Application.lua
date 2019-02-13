@@ -263,16 +263,16 @@ function UpdateSpeedMeter(speedValue)
 end
 
 function UpdateGuidelineBox()
-    --local nearestCheckpoint = GetActiveCheckpoint(0).point
-    --local nextCheckpoint = GetActiveCheckpoint( 1).point
-    --checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
-    --cos = vectorsCos(checkpointsVector, vehicleNode.direction)
-    --sin = vectorsSin(checkpointsVector, vehicleNode.direction)
-    --distanceToCheckpoint = (vehicleNode.position - nearestCheckpoint):Length()
-    --
-    --if distanceToCheckpoint < 10 then
-    --    MarkNextCheckpointActive()
-    --end
+    local nearestCheckpoint = GetActiveCheckpoint(0).point
+    local nextCheckpoint = GetActiveCheckpoint( 1).point
+    checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
+    cos = vectorsCos(checkpointsVector, vehicleNode.direction)
+    sin = vectorsSin(checkpointsVector, vehicleNode.direction)
+    distanceToCheckpoint = (vehicleNode.position - nearestCheckpoint):Length()
+
+    if distanceToCheckpoint < 10 then
+        MarkNextCheckpointActive()
+    end
 
     if cos < 0 then
         turnInfo = 'TURN AROUND'
@@ -284,7 +284,7 @@ function UpdateGuidelineBox()
         turnInfo = ''
     end
 
-    guideline.text = '' --vehicleNode.position.x..vehicleNode.position.z..' distance: '..distanceToCheckpoint
+    guideline.text = vehicleNode.position.x..vehicleNode.position.z..' distance: '..distanceToCheckpoint
     local offset_X = 20
     local offset_Y = 100
     local pos_X = ui.root:GetWidth() - guideline:GetWidth() - offset_X
