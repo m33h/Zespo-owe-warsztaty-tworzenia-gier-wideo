@@ -8,8 +8,10 @@ require "Source/Components/Guidelines"
 
 local vehicleNode
 local cpuVehicleNode
+local cpuVehicleNode2
 local vehicle
 local cpuVehicle
+local cpuVehicle2
 local collectedPowerupsCount = 0
 
 Application = ScriptObject()
@@ -58,15 +60,22 @@ function  Application:CreateVehicles(vehiclesrc)
     vehicleNode = scene_:CreateChild("Vehicle")
     vehicleNode.position = Vector3(80, 3.0, 160.0)
     vehicleNode:SetDirection(Vector3(-1,0,0))
+
     cpuVehicleNode = scene_:CreateChild("CpuVehicle")
     cpuVehicleNode.position = Vector3(80, 3.0, 200.0)
     cpuVehicleNode:SetDirection(Vector3(-1,0,0))
+    cpuVehicleNode2 = scene_:CreateChild("CpuVehicle2")
+    cpuVehicleNode2.position = Vector3(60, 3.0, 200.0)
+    cpuVehicleNode2:SetDirection(Vector3(-1,0,0))
 
     cpuVehicle = cpuVehicleNode:CreateScriptObject("CpuVehicle")
+    cpuVehicle2 = cpuVehicleNode2:CreateScriptObject("CpuVehicle")
     vehicle = vehicleNode:CreateScriptObject("Vehicle")
 
-    cpuVehicle:Init(scene_)
+    cpuVehicle:Init(scene_, "1")
+    cpuVehicle2:Init(scene_, "2")
     vehicle:Init(scene_)
+
 end
 
 function  Application:CreateViewport()

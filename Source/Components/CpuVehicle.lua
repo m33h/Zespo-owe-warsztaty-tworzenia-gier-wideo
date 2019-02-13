@@ -5,7 +5,7 @@ distanceToCheckpoint = 0
 
 local scene_
 
-function CpuVehicle:Init(scene)
+function CpuVehicle:Init(scene, cpu_index)
     print("Vehicle:Init")
     --
     -- This function is called only from the main program when initially creating the vehicle, not on scene load
@@ -22,14 +22,16 @@ function CpuVehicle:Init(scene)
     hullObject.castShadows = true
     hullShape:SetBox(Vector3(1.0, 1.0, 1.0))
 
+    self.cpu_index = cpu_index
+
     self.hullBody.mass = 5
     self.hullBody.linearDamping = 0.75
     self.hullBody.angularDamping = 0.5
     self.hullBody.collisionLayer = 1
-    self.frontLeft = self:InitWheel("CpuFrontLeft", Vector3(-0.6, -0.4, 0.3))
-    self.frontRight = self:InitWheel("CpuFrontRight", Vector3(0.6, -0.4, 0.3))
-    self.rearLeft = self:InitWheel("CpuRearLeft", Vector3(-0.6, -0.4, -0.3))
-    self.rearRight = self:InitWheel("CpuRearRight", Vector3(0.6, -0.4, -0.3))
+    self.frontLeft = self:InitWheel("FrontLeftCpu_"..self.cpu_index, Vector3(-0.6, -0.4, 0.3))
+    self.frontRight = self:InitWheel("FrontRightCpu_"..self.cpu_index, Vector3(0.6, -0.4, 0.3))
+    self.rearLeft = self:InitWheel("RearLeftCpu_"..self.cpu_index, Vector3(-0.6, -0.4, -0.3))
+    self.rearRight = self:InitWheel("RearRightCpu_"..self.cpu_index, Vector3(0.6, -0.4, -0.3))
     self:PostInit()
 end
 
@@ -85,10 +87,10 @@ end
 function CpuVehicle:PostInit()
     print("Vehicle:PostInit")
 
-    self.frontLeft = self.scene_:GetChild("CpuFrontLeft")
-    self.frontRight = self.scene_:GetChild("CpuFrontRight")
-    self.rearLeft = self.scene_:GetChild("CpuRearLeft")
-    self.rearRight = self.scene_:GetChild("CpuRearRight")
+    self.frontLeft = self.scene_:GetChild("FrontLeftCpu_"..self.cpu_index)
+    self.frontRight = self.scene_:GetChild("FrontRightCpu_"..self.cpu_index)
+    self.rearLeft = self.scene_:GetChild("RearLeftCpu_"..self.cpu_index)
+    self.rearRight = self.scene_:GetChild("RearRightCpu_"..self.cpu_index)
 
     self.frontLeftAxis = self.frontLeft:GetComponent("Constraint")
     self.frontRightAxis = self.frontRight:GetComponent("Constraint")
