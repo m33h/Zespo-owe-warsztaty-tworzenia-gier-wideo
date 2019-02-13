@@ -34,7 +34,6 @@ function StartTimer:FixedUpdate(timeStep)
     if (startTimerValue <= 0) then
         startTimeText:SetVisible(false)
     end
-    print(startTimerValue)
 end
 
 Timer = {}

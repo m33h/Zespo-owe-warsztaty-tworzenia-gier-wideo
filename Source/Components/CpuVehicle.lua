@@ -116,53 +116,55 @@ function CpuVehicle:Save(serializer)
 end
 
 function CpuVehicle:FixedUpdate(timeStep)
-    local nearestCheckpoint = GetNearestPoint(self.node.position, 0)
-    local nextCheckpoint = GetNearestPoint(self.node.position, 1)
-    checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
-    cos = vectorsCos(checkpointsVector, self.node.direction)
-    sin = vectorsSin(checkpointsVector, self.node.direction)
+    if (GAME_STATE == 'PLAY_GAME') then
+        local nearestCheckpoint = GetNearestPoint(self.node.position, 0)
+        local nextCheckpoint = GetNearestPoint(self.node.position, 1)
+        checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
+        cos = vectorsCos(checkpointsVector, self.node.direction)
+        sin = vectorsSin(checkpointsVector, self.node.direction)
 
-    local newSteering = 0.0
+        local newSteering = 0.0
 
-    if sin > 0 and sin < 0.5 then
-        newSteering = 0.4
-    elseif sin >= 0.5 and sin < 0.8 then
-        newSteering = 0.8
-    elseif sin >= 0.8 then
-        newSteering = 1.0
-    elseif sin < 0 and sin > -0.5 then
-        newSteering = -0.4
-    elseif sin <= -0.5 then
-        newSteering = -1.0
-    elseif sin < -0.5 and sin > -0.8 then
-        newSteering = 0.8
-    elseif sin <= 0.8 then
-        newSteering = -1.0
+        if sin > 0 and sin < 0.5 then
+            newSteering = 0.4
+        elseif sin >= 0.5 and sin < 0.8 then
+            newSteering = 0.8
+        elseif sin >= 0.8 then
+            newSteering = 1.0
+        elseif sin < 0 and sin > -0.5 then
+            newSteering = -0.4
+        elseif sin <= -0.5 then
+            newSteering = -1.0
+        elseif sin < -0.5 and sin > -0.8 then
+            newSteering = 0.8
+        elseif sin <= 0.8 then
+            newSteering = -1.0
+        end
+
+        local accelerator = 1.0
+
+        if newSteering ~= 0.0 then
+            self.frontLeftBody:Activate()
+            self.frontRightBody:Activate()
+            self.steering = self.steering * 0.95 + newSteering * 0.05
+        else
+            self.steering = self.steering * 0.8 + newSteering * 0.2
+        end
+
+        local steeringRot = Quaternion(0.0, self.steering * MAX_WHEEL_ANGLE, 0.0)
+        self.frontLeftAxis.otherAxis = steeringRot * Vector3(-1.0, 0.0, 0.0)
+        self.frontRightAxis.otherAxis = steeringRot * Vector3(1.0, 0.0, 0.0)
+
+        if accelerator ~= 0.0 then
+            local torqueVec = Vector3(ENGINE_POWER * accelerator, 0.0, 0.0)
+            local node = self.node
+            self.frontLeftBody:ApplyTorque(node.rotation * steeringRot * torqueVec)
+            self.frontRightBody:ApplyTorque(node.rotation * steeringRot * torqueVec)
+            self.rearLeftBody:ApplyTorque(node.rotation * torqueVec)
+            self.rearRightBody:ApplyTorque(node.rotation * torqueVec)
+        end
+
+        local localVelocity = self.hullBody.rotation:Inverse() * self.hullBody.linearVelocity
+        self.hullBody:ApplyForce(self.hullBody.rotation * Vector3(0.0, -1.0, 0.0) * Abs(localVelocity.z) * DOWN_FORCE)
     end
-
-    local accelerator = 1.0
-
-    if newSteering ~= 0.0 then
-        self.frontLeftBody:Activate()
-        self.frontRightBody:Activate()
-        self.steering = self.steering * 0.95 + newSteering * 0.05
-    else
-        self.steering = self.steering * 0.8 + newSteering * 0.2
-    end
-
-    local steeringRot = Quaternion(0.0, self.steering * MAX_WHEEL_ANGLE, 0.0)
-    self.frontLeftAxis.otherAxis = steeringRot * Vector3(-1.0, 0.0, 0.0)
-    self.frontRightAxis.otherAxis = steeringRot * Vector3(1.0, 0.0, 0.0)
-
-    if accelerator ~= 0.0 then
-        local torqueVec = Vector3(ENGINE_POWER * accelerator, 0.0, 0.0)
-        local node = self.node
-        self.frontLeftBody:ApplyTorque(node.rotation * steeringRot * torqueVec)
-        self.frontRightBody:ApplyTorque(node.rotation * steeringRot * torqueVec)
-        self.rearLeftBody:ApplyTorque(node.rotation * torqueVec)
-        self.rearRightBody:ApplyTorque(node.rotation * torqueVec)
-    end
-
-    local localVelocity = self.hullBody.rotation:Inverse() * self.hullBody.linearVelocity
-    self.hullBody:ApplyForce(self.hullBody.rotation * Vector3(0.0, -1.0, 0.0) * Abs(localVelocity.z) * DOWN_FORCE)
 end
