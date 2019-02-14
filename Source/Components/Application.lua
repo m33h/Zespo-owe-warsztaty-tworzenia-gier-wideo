@@ -14,6 +14,7 @@ local cpuVehicle
 local cpuVehicle2
 local collectedPowerupsCount = 0
 local nearestCheckpoint
+local musicSource
 
 Application = ScriptObject()
 
@@ -152,6 +153,7 @@ function HandleUpdate(eventType, eventData)
     end
 
     if(GAME_STATE == 'START_GAME') then
+        PlayMusic()
 --        ChangeState("PLAY_GAME")
     elseif(GAME_STATE == 'PLAY_GAME') then
         GameInput(vehicle)
@@ -285,6 +287,14 @@ function UpdatePowerupsUi()
     else
         powerupsCountText:SetText("0")
     end
+end
+
+function PlayMusic()
+    musicSource = scene_:CreateComponent("SoundSource")
+    musicSource.soundType = SOUND_MUSIC
+    local music = cache:GetResource("Sound", "Assets/Music/mushrooms.ogg")
+    music.looped = true
+    musicSource:Play(music)
 end
 
 function UpdateSpeedMeter(speedValue)
