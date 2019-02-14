@@ -1,6 +1,7 @@
 checkpoints = {
+    { active = true, point = Vector3(70,1.4,160) },
     { active = false, point = Vector3(80,1.4,200) },
-    { active = true, point = Vector3(60,1.4,200) },
+    { active = false, point = Vector3(60,1.4,200) },
     { active = false, point = Vector3(40,1.4,200) },
     { active = false, point = Vector3(20,1.4,200) },
     { active = false, point = Vector3(0,1.4,200) },
@@ -52,7 +53,10 @@ checkpoints = {
     { active = false, point = Vector3(100,1.4,20) },
     { active = false, point = Vector3(100,1.4,40) },
     { active = false, point = Vector3(100,1.4,60) },
-    { active = false, point = Vector3(100,1.4,60) }
+    { active = false, point = Vector3(100,1.4,40) },
+    { active = false, point = Vector3(100,1.4,20) },
+    { active = false, point = Vector3(100,1.4,0) },
+    { active = false, point = Vector3(100,1.4,-420) }
 }
 
 function GetActiveCheckpoint(order)
@@ -66,9 +70,6 @@ end
 function MarkNextCheckpointActive()
     currentCheckpoint = GetActiveCheckpoint(0)
     nextCheckpoint = GetActiveCheckpoint(1)
-
-    currentCheckpoint.active = false
-    nextCheckpoint.active = true
 end
 
 function GetNearestCheckpoint(vector, order)

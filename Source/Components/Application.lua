@@ -13,6 +13,7 @@ local vehicle
 local cpuVehicle
 local cpuVehicle2
 local collectedPowerupsCount = 0
+local nearestCheckpoint
 
 Application = ScriptObject()
 
@@ -48,6 +49,29 @@ function Application:CreateScene()
     renderer:SetViewport(0, Viewport:new(scene_, camera))
     scene_:CreateScriptObject("Timer")
     scene_:CreateScriptObject("StartTimer")
+
+
+
+    for i = 1, #checkpoints do
+        local objectNode = scene_:CreateChild("Mushroom")
+        local position = Vector3(checkpoints[i].point.x, 0.0, checkpoints[i].point.z)
+        position.y = 0.1
+        objectNode.position = position
+        objectNode.rotation = Quaternion(Vector3(0.0, 1.0, 0.0), Vector3(0,1,0.0))
+        objectNode:SetScale(3.0)
+        local object = objectNode:CreateComponent("StaticModel")
+        object.model = cache:GetResource("Model", "Models/Mushroom.mdl")
+        object.material = cache:GetResource("Material", "Materials/Mushroom.xml")
+        object.castShadows = true
+
+        local body = objectNode:CreateComponent("RigidBody")
+        body.collisionLayer = 2
+        local shape = objectNode:CreateComponent("CollisionShape")
+        shape:SetTriangleMesh(object.model, 0)
+
+        checkpoints[i].flagNode = objectNode
+        objectNode:SetEnabled(checkpoints[i].active)
+    end
 end
 
 function Application:PlayGame()
@@ -156,6 +180,8 @@ function HandlePostUpdate(eventType, eventData)
     end
 
     if((vehicleNode.position - GetActiveCheckpoint(0).point):Length() < 10) then
+        GetActiveCheckpoint(1).flagNode:SetEnabled(true)
+        GetActiveCheckpoint(0).flagNode:SetEnabled(false)
         GetActiveCheckpoint(1).active = true
         GetActiveCheckpoint(0).active = false
     end
@@ -173,8 +199,7 @@ function HandlePostUpdate(eventType, eventData)
     local cameraTargetPos = vehicleNode.position - dir * Vector3(0.0, 0.0, CAMERA_DISTANCE)
     local cameraStartPos = vehicleNode.position
 
-    -- Raycast camera against static objects (physics collision mask 2)
-    -- and move it closer to the vehicle if something in between
+
     local cameraRay = Ray(cameraStartPos, (cameraTargetPos - cameraStartPos):Normalized())
     local cameraRayLength = (cameraTargetPos - cameraStartPos):Length()
     local physicsWorld = scene_:GetComponent("PhysicsWorld")
@@ -272,16 +297,12 @@ function UpdateSpeedMeter(speedValue)
 end
 
 function UpdateGuidelineBox()
-    local nearestCheckpoint = GetActiveCheckpoint(0).point
+    nearestCheckpoint = GetActiveCheckpoint(0).point
     local nextCheckpoint = GetActiveCheckpoint( 1).point
     checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
     cos = vectorsCos(checkpointsVector, vehicleNode.direction)
     sin = vectorsSin(checkpointsVector, vehicleNode.direction)
     distanceToCheckpoint = (vehicleNode.position - nearestCheckpoint):Length()
-
-    if distanceToCheckpoint < 10 then
-        MarkNextCheckpointActive()
-    end
 
     if cos < 0 then
         turnInfo = 'TURN AROUND'
