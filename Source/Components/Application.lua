@@ -65,11 +65,6 @@ function Application:CreateScene()
         object.material = cache:GetResource("Material", "Materials/Mushroom.xml")
         object.castShadows = true
 
-        local body = objectNode:CreateComponent("RigidBody")
-        body.collisionLayer = 2
-        local shape = objectNode:CreateComponent("CollisionShape")
-        shape:SetTriangleMesh(object.model, 0)
-
         checkpoints[i].flagNode = objectNode
         objectNode:SetEnabled(checkpoints[i].active)
     end
