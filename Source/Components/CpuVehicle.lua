@@ -1,4 +1,5 @@
 require "Source/Components/AppConstants"
+require "Source/Components/Timer"
 
 CpuVehicle = ScriptObject()
 distanceToCheckpoint = 0
@@ -23,6 +24,7 @@ function CpuVehicle:Init(scene, cpu_index)
     hullShape:SetBox(Vector3(1.0, 1.0, 1.0))
 
     self.cpu_index = cpu_index
+    self.finished = false
 
     self.hullBody.mass = 5
     self.hullBody.linearDamping = 0.75
@@ -119,7 +121,13 @@ function CpuVehicle:Save(serializer)
 end
 
 function CpuVehicle:FixedUpdate(timeStep)
-    if (GAME_STATE == 'PLAY_GAME') then
+
+    if ((GAME_STATE == "PLAY_GAME" or GAME_STATE == "WIN_STATE") and not self.finished) then
+        if (DidCrossedFinishLine(self.node.position)) then
+            RegisterTime("CPU_"..self.cpu_index)
+            self.finished = true
+            return
+        end
         local nearestCheckpoint = GetNearestCheckpoint(self.node.position, 0).point
         local nextCheckpoint = GetNearestCheckpoint(self.node.position, 1).point
         checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()

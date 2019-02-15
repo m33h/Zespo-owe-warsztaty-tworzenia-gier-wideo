@@ -177,10 +177,16 @@ function HandlePostUpdate(eventType, eventData)
     end
 
     if((vehicleNode.position - GetActiveCheckpoint(0).point):Length() < 10) then
+        vehicle.guildlines_points = vehicle.guildlines_points + 1
         GetActiveCheckpoint(1).flagNode:SetEnabled(true)
         GetActiveCheckpoint(0).flagNode:SetEnabled(false)
         GetActiveCheckpoint(1).active = true
         GetActiveCheckpoint(0).active = false
+    end
+
+    if (DidPlayerFinish(vehicle.guildlines_points)) then
+        ChangeState( "WIN_STATE")
+        RegisterTime("PLAYER")
     end
 
     local speed = vehicle.hullBody.linearVelocity:Length()

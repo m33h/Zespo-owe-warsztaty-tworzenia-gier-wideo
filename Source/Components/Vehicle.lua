@@ -32,6 +32,8 @@ function Vehicle:Init(scene)
 
     self:SubscribeToEvents()
     self:PostInit()
+
+    self.guildlines_points = 0
 end
 
 function Vehicle:SubscribeToEvents()

@@ -54,10 +54,48 @@ checkpoints = {
     { active = false, point = Vector3(100,1.4,40) },
     { active = false, point = Vector3(100,1.4,60) },
     { active = false, point = Vector3(100,1.4,40) },
-    { active = false, point = Vector3(100,1.4,20) },
-    { active = false, point = Vector3(100,1.4,0) },
-    { active = false, point = Vector3(100,1.4,-420) }
 }
+
+
+function DidPlayerFinish(counter)
+    if (counter == #checkpoints - 1) then
+        return true
+    else
+        return false
+    end
+end
+
+
+--this needs to be changed
+function DidCrossedFinishLine(point)
+    local crossed = false
+    local lastPoint = checkpoints[#checkpoints - 1].point
+    local almostLastPoint = checkpoints[#checkpoints - 2].point
+    local vector = (lastPoint - almostLastPoint)
+    if (vector.x == 0) then
+        if (vector.z > 0) then
+            if (point.z > lastPoint.z and (lastPoint.x - 15 <= point.x and point.x <= lastPoint.x + 15)) then
+                crossed = true
+            end
+        elseif(vector.z <0) then
+            if (point.z < lastPoint.z and (lastPoint.x - 15 <= point.x and point.x <= lastPoint.x + 15)) then
+                crossed = true
+            end
+        end
+    end
+    if (vector.z == 0) then
+        if (vector.x > 0) then
+            if (point.x > lastPoint.x and (lastPoint.z - 15 <= point.z and point.z <= lastPoint.z + 15)) then
+                crossed = true
+            end
+        elseif(vector.x <0) then
+            if (point.x < lastPoint.x and (lastPoint.z - 15 <= point.z and point.z <= lastPoint.z + 15)) then
+                crossed = true
+            end
+        end
+    end
+    return crossed
+end
 
 function GetActiveCheckpoint(order)
     for k = 1, #checkpoints do
