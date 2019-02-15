@@ -135,21 +135,6 @@ end
 
 --This demo was written to show timer functionality
 function TimerDemo()
-    if input:GetKeyDown(KEY_1) then
-        RegisterTime("Ala")
-    end
-    if input:GetKeyDown(KEY_2) then
-        RegisterTime("Bartek")
-    end
-    if input:GetKeyDown(KEY_3) then
-        RegisterTime("Cezary")
-    end
-    if input:GetKeyDown(KEY_4) then
-        RegisterTime("Dawid")
-    end
-    if input:GetKeyDown(KEY_5) then
-        ChangeState("WIN_STATE")
-    end
     if (GAME_STATE == "WIN_STATE") then
         DisplayResults()
     end

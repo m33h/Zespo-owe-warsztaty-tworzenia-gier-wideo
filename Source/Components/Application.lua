@@ -205,8 +205,12 @@ function HandlePostUpdate(eventType, eventData)
     end
 
     if (DidPlayerFinish(vehicle.guildlines_points)) then
+        local exitButton = ui.root:GetChild("ExitButton", true)
+        exitButton.visible = true
+        exitButton:SetPosition(0, 200)
         ChangeState( "WIN_STATE")
         RegisterTime("PLAYER")
+        input.mouseVisible = true
     end
 
     local speed = vehicle.hullBody.linearVelocity:Length()
