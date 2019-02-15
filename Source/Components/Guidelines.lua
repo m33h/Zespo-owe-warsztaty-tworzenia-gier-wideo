@@ -1,8 +1,8 @@
 checkpoints = {
-    { active = true, point = Vector3(70,1.4,160) },
+    { active = false, point = Vector3(100,1.4,200) },
     { active = false, point = Vector3(80,1.4,200) },
     { active = false, point = Vector3(60,1.4,200) },
-    { active = false, point = Vector3(40,1.4,200) },
+    { active = true, point = Vector3(40,1.4,200) },
     { active = false, point = Vector3(20,1.4,200) },
     { active = false, point = Vector3(0,1.4,200) },
     { active = false, point = Vector3(-20,1.4,200) },

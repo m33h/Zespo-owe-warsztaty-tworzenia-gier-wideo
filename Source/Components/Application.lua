@@ -97,14 +97,14 @@ function  Application:CreateVehicles(vehiclesrc)
     print("Application:CreateVehicle")
 
     vehicleNode = scene_:CreateChild("Vehicle")
-    vehicleNode.position = Vector3(80, 3.0, 160.0)
+    vehicleNode.position = Vector3(80, 3.0, 200.0)
     vehicleNode:SetDirection(Vector3(-1,0,0))
 
     cpuVehicleNode = scene_:CreateChild("CpuVehicle")
-    cpuVehicleNode.position = Vector3(80, 3.0, 200.0)
+    cpuVehicleNode.position = Vector3(80, 3.0, 210.0)
     cpuVehicleNode:SetDirection(Vector3(-1,0,0))
     cpuVehicleNode2 = scene_:CreateChild("CpuVehicle2")
-    cpuVehicleNode2.position = Vector3(60, 3.0, 200.0)
+    cpuVehicleNode2.position = Vector3(80, 3.0, 190.0)
     cpuVehicleNode2:SetDirection(Vector3(-1,0,0))
 
     cpuVehicle = cpuVehicleNode:CreateScriptObject("CpuVehicle")
@@ -170,7 +170,6 @@ function HandleUpdate(eventType, eventData)
 --        ChangeState("PLAY_GAME")
     elseif(GAME_STATE == 'PLAY_GAME') then
         GameInput(vehicle)
-
         TimerDemo()  --used to show timer functionality, it needs to be changed
     elseif(GAME_STATE == 'GAME_MENU') then
         Menu()
@@ -233,7 +232,7 @@ function HandlePostUpdate(eventType, eventData)
     cameraNode.position = cameraTargetPos
     cameraNode.rotation = dir
 
-    if((math.random() > 0.8)) then
+    if(GAME_STATE == 'PLAY_GAME' and (math.random() > 0.7)) then
         light_blue = light_blue + math.random()/20 - math.random()/20
         light_green = light_green + math.random()/20 - math.random()/20
         light_red = light_red + math.random()/20 - math.random()/20
@@ -250,9 +249,9 @@ function HandlePowerupCollected(eventType, eventData)
 end
 
 function HandleMushroomCollected(eventType, eventData)
-    light_blue = light_blue + math.random()/5 - math.random()/5
-    light_green = light_green + math.random()/5 - math.random()/5
-    light_red = light_red + math.random()/5 - math.random()/5
+    light_blue = light_blue + math.random()/4 - math.random()/5
+    light_green = light_green + math.random()/4 - math.random()/5
+    light_red = light_red + math.random()/4 - math.random()/5
     light:SetColor(Color(light_red, light_green, light_blue))
 end
 
