@@ -15,6 +15,10 @@ local cpuVehicle2
 local collectedPowerupsCount = 0
 local nearestCheckpoint
 local musicSource
+local light_red = 0.1
+local light_green = 0.1
+local light_blue = 0.1
+local light
 
 Application = ScriptObject()
 
@@ -40,6 +44,7 @@ function Application:SubscribeToEvents()
     SubscribeToEvent("Update", "HandleUpdate")
     SubscribeToEvent("PostUpdate", "HandlePostUpdate")
     SubscribeToEvent(EVENT_POWERUP_COLLECTED, "HandlePowerupCollected")
+    SubscribeToEvent(EVENT_MUSHROOM_COLLECTED, "HandleMushroomCollected")
 end
 
 function Application:CreateScene()
@@ -74,6 +79,14 @@ function Application:CreateScene()
         checkpoints[i].flagNode = objectNode
         objectNode:SetEnabled(checkpoints[i].active)
     end
+
+
+    local lightNode = scene_:CreateChild("DirectionalLight")
+    lightNode.direction = Vector3(0.5, -1.0, 0.5)
+    light = lightNode:CreateComponent("Light")
+    light.lightType = LIGHT_DIRECTIONAL
+    light.color = Color(color_red, color_green, color_blue)
+    light.specularIntensity = 1.0
 end
 
 function Application:PlayGame()
@@ -189,6 +202,7 @@ function HandlePostUpdate(eventType, eventData)
         GetActiveCheckpoint(0).flagNode:SetEnabled(false)
         GetActiveCheckpoint(1).active = true
         GetActiveCheckpoint(0).active = false
+        SendEvent(EVENT_MUSHROOM_COLLECTED)
     end
 
     if (DidPlayerFinish(vehicle.guildlines_points)) then
@@ -227,6 +241,13 @@ end
 function HandlePowerupCollected(eventType, eventData)
     collectedPowerupsCount = collectedPowerupsCount + 1
     UpdatePowerupsUi()
+end
+
+function HandleMushroomCollected(eventType, eventData)
+    light_blue = light_blue + math.random()/5 - math.random()/5
+    light_green = light_green + math.random()/5 - math.random()/5
+    light_red = light_red + math.random()/5 - math.random()/5
+    light:SetColor(Color(light_red, light_green, light_blue))
 end
 
 function CreatePowerupsUi()
