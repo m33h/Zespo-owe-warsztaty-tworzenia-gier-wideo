@@ -2,8 +2,6 @@ require "Source/Components/AppConstants"
 
 Vehicle = ScriptObject()
 
-local scene_
-
 function Vehicle:Init(scene)
     print("Vehicle:Init")
 
@@ -146,6 +144,7 @@ function Vehicle:FixedUpdate(timeStep)
 
     local newSteering = 0.0
     local accelerator = 0.0
+
     if self.controls:IsDown(CTRL_LEFT) then
         newSteering = -1.0
     end
@@ -157,6 +156,10 @@ function Vehicle:FixedUpdate(timeStep)
     end
     if self.controls:IsDown(CTRL_BACK) then
         accelerator = -0.5
+    end
+
+    if input:GetMouseButtonPress(MOUSEB_LEFT) then
+        Vehicle:Fire(self.node, self.node:GetScene())
     end
 
     -- When steering, wake up the wheel rigidbodies so that their orientation is updated
@@ -185,4 +188,28 @@ function Vehicle:FixedUpdate(timeStep)
     -- Apply downforce proportional to velocity
     local localVelocity = self.hullBody.rotation:Inverse() * self.hullBody.linearVelocity
     self.hullBody:ApplyForce(self.hullBody.rotation * Vector3(0.0, -1.0, 0.0) * Abs(localVelocity.z) * DOWN_FORCE)
+end
+
+function Vehicle:Fire(currentNode, scene)
+    print("Vehicle:Fire()")
+    local vehicleNode = currentNode
+
+    local bulletNode = scene:CreateChild("Bullet");
+    bulletNode.position = vehicleNode.position + vehicleNode.direction * 2
+    bulletNode.direction = vehicleNode.direction
+
+    local bulletStaticModel = bulletNode:CreateComponent("StaticModel")
+    bulletStaticModel.model = cache:GetResource("Model", fileSystem:GetProgramDir().."Data/Models/Sphere.mdl")
+    bulletStaticModel.material = cache:GetResource("Material",fileSystem:GetProgramDir().."Data/Materials/StoneEnvMapSmall.xml")
+    bulletStaticModel.castShadows = true;
+
+    local bulletRigidBody = bulletNode:CreateComponent("RigidBody")
+    bulletRigidBody.mass = 2.8
+    bulletRigidBody.friction = 0.75
+
+    local collisionShape = bulletNode:CreateComponent("CollisionShape")
+    collisionShape:SetBox(Vector3(1.2, 1.2, 1.2))
+
+    local OBJECT_VELOCITY = 250.0
+    bulletRigidBody.linearVelocity = vehicleNode.rotation * Vector3(0.0, 0.015, 1) * OBJECT_VELOCITY
 end
