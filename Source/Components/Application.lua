@@ -28,6 +28,12 @@ function Start()
     CreateSpeedMeter()
     CreateGuidelineBox()
     CreatePowerupsUi()
+
+    musicSource = scene_:CreateComponent("SoundSource")
+    musicSource.soundType = SOUND_MUSIC
+    local music = cache:GetResource("Sound", "Assets/Music/mushrooms.ogg")
+    music.looped = true
+    musicSource:Play(music)
 end
 
 function Application:SubscribeToEvents()
@@ -152,6 +158,7 @@ function HandleUpdate(eventType, eventData)
 --        ChangeState("PLAY_GAME")
     elseif(GAME_STATE == 'PLAY_GAME') then
         GameInput(vehicle)
+
         TimerDemo()  --used to show timer functionality, it needs to be changed
     elseif(GAME_STATE == 'GAME_MENU') then
         Menu()
@@ -292,7 +299,7 @@ end
 function PlayMusic()
     --musicSource = scene_:CreateComponent("SoundSource")
     --musicSource.soundType = SOUND_MUSIC
-    --local music = cache:GetResource("Sound", "Assets/Music/mushrooms.ogg")
+    --local music = cache:GetResource("Sound", "Assets/Music/Ninja Gods.ogg")
     --music.looped = true
     --musicSource:Play(music)
 end
