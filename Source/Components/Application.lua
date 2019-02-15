@@ -167,7 +167,6 @@ function HandleUpdate(eventType, eventData)
     end
 
     if(GAME_STATE == 'START_GAME') then
-        PlayMusic()
 --        ChangeState("PLAY_GAME")
     elseif(GAME_STATE == 'PLAY_GAME') then
         GameInput(vehicle)
@@ -233,6 +232,13 @@ function HandlePostUpdate(eventType, eventData)
 
     cameraNode.position = cameraTargetPos
     cameraNode.rotation = dir
+
+    if((math.random() > 0.8)) then
+        light_blue = light_blue + math.random()/20 - math.random()/20
+        light_green = light_green + math.random()/20 - math.random()/20
+        light_red = light_red + math.random()/20 - math.random()/20
+        light:SetColor(Color(light_red, light_green, light_blue))
+    end
 end
 
 function HandleSceneUpdate(eventType, eventData)
@@ -315,14 +321,6 @@ function UpdatePowerupsUi()
     else
         powerupsCountText:SetText("0")
     end
-end
-
-function PlayMusic()
-    --musicSource = scene_:CreateComponent("SoundSource")
-    --musicSource.soundType = SOUND_MUSIC
-    --local music = cache:GetResource("Sound", "Assets/Music/Ninja Gods.ogg")
-    --music.looped = true
-    --musicSource:Play(music)
 end
 
 function UpdateSpeedMeter(speedValue)
