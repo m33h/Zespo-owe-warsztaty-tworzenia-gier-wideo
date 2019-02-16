@@ -161,7 +161,7 @@ function Vehicle:FixedUpdate(timeStep)
     end
     if input:GetMouseButtonPress(MOUSEB_LEFT) then
         print(GAME_STATE)
-        if GAME_STATE == "PLAY_GAME" then
+        if GAME_STATE == "PLAY_GAME" and Vehicle:HasAmmo() then
             Vehicle:Fire(self.node, self.node:GetScene())
         end
     end
@@ -197,6 +197,7 @@ end
 
 function Vehicle:Fire(currentNode, scene)
     print("Vehicle:Fire()")
+    SendEvent(EVENT_BULLET_FIRED)
     local vehicleNode = currentNode
 
     local bulletNode = scene:CreateChild("Bullet");
@@ -217,4 +218,8 @@ function Vehicle:Fire(currentNode, scene)
 
     local OBJECT_VELOCITY = 280.0
     bulletRigidBody.linearVelocity = vehicleNode.rotation * Vector3(0.0, 0.008, 1) * OBJECT_VELOCITY
+end
+
+function Vehicle:HasAmmo()
+    return collectedPowerupsCount > 0
 end

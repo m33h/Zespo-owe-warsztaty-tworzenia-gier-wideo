@@ -12,7 +12,6 @@ local cpuVehicleNode2
 local vehicle
 local cpuVehicle
 local cpuVehicle2
-local collectedPowerupsCount = 0
 local nearestCheckpoint
 local nearestCheckpointNode
 local musicSource
@@ -46,6 +45,7 @@ function Application:SubscribeToEvents()
     SubscribeToEvent("PostUpdate", "HandlePostUpdate")
     SubscribeToEvent(EVENT_POWERUP_COLLECTED, "HandlePowerupCollected")
     SubscribeToEvent(EVENT_MUSHROOM_COLLECTED, "HandleMushroomCollected")
+    SubscribeToEvent(EVENT_BULLET_FIRED, "HandleBulletFired")
 end
 
 function Application:CreateScene()
@@ -62,8 +62,6 @@ function Application:CreateScene()
     renderer:SetViewport(0, Viewport:new(scene_, camera))
     scene_:CreateScriptObject("Timer")
     scene_:CreateScriptObject("StartTimer")
-
-
 
     for i = 1, #checkpoints do
         local objectNode = scene_:CreateChild("Mushroom")
@@ -258,7 +256,7 @@ function HandleSceneUpdate(eventType, eventData)
 end
 
 function HandlePowerupCollected(eventType, eventData)
-    collectedPowerupsCount = collectedPowerupsCount + 1
+    collectedPowerupsCount = collectedPowerupsCount + AMMO_COUNT_FOR_POWERUP
     UpdatePowerupsUi()
 end
 
@@ -267,6 +265,11 @@ function HandleMushroomCollected(eventType, eventData)
     light_green = light_green + math.random()/4 - math.random()/5
     light_red = light_red + math.random()/4 - math.random()/5
     light:SetColor(Color(light_red, light_green, light_blue))
+end
+
+function HandleBulletFired(eventType, eventData)
+    collectedPowerupsCount = collectedPowerupsCount - 1
+    UpdatePowerupsUi()
 end
 
 function CreatePowerupsUi()
@@ -287,13 +290,14 @@ function CreatePowerupsUi()
     powerupsIcon:SetSize(ammoIconSize, ammoIconSize)
 
     powerupsCountText = Text:new()
-    powerupsCountText.text = "0"
     powerupsCountText:SetFont(cache:GetResource("Font", "Fonts/Anonymous Pro.ttf"), 42)
     powerupsCountText.color = Color.WHITE
     powerupsCountText:SetPosition(ammoTextPosX, ammoTextPosY)
 
     ui.root:AddChild(powerupsCountText)
     ui.root:AddChild(powerupsIcon)
+
+    UpdatePowerupsUi()
 end
 
 function CreateSpeedMeter()
