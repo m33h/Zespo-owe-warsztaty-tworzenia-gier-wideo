@@ -14,6 +14,7 @@ local cpuVehicle
 local cpuVehicle2
 local collectedPowerupsCount = 0
 local nearestCheckpoint
+local nearestCheckpointNode
 local musicSource
 local light_red = 0.1
 local light_green = 0.1
@@ -200,6 +201,7 @@ function HandlePostUpdate(eventType, eventData)
         GetActiveCheckpoint(0).flagNode:SetEnabled(false)
         GetActiveCheckpoint(1).active = true
         GetActiveCheckpoint(0).active = false
+        nearestCheckpointNode = GetActiveCheckpoint(0).flagNode
         SendEvent(EVENT_MUSHROOM_COLLECTED)
     end
 
@@ -242,6 +244,13 @@ function HandlePostUpdate(eventType, eventData)
         light_green = light_green + math.random()/20 - math.random()/20
         light_red = light_red + math.random()/20 - math.random()/20
         light:SetColor(Color(light_red, light_green, light_blue))
+    end
+
+    mushroomMoveFlag = math.random()
+    while mushroomMoveFlag < 0.2 and nearestCheckpointNode do
+        delta = math.random() / 100
+        nearestCheckpointNode:SetPosition(Vector3(nearestCheckpointNode.position.x + delta, nearestCheckpointNode.position.y, nearestCheckpointNode.position.z + delta))
+        mushroomMoveFlag = mushroomMoveFlag + delta
     end
 end
 
