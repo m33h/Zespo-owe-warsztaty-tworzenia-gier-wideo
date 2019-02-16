@@ -159,9 +159,11 @@ function Vehicle:FixedUpdate(timeStep)
     if self.controls:IsDown(CTRL_BACK) then
         accelerator = -0.5
     end
-
     if input:GetMouseButtonPress(MOUSEB_LEFT) then
-        Vehicle:Fire(self.node, self.node:GetScene())
+        print(GAME_STATE)
+        if GAME_STATE == "PLAY_GAME" then
+            Vehicle:Fire(self.node, self.node:GetScene())
+        end
     end
 
     -- When steering, wake up the wheel rigidbodies so that their orientation is updated
