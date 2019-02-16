@@ -7,8 +7,8 @@
 	<attribute name="Elapsed Time" value="5014.08" />
 	<attribute name="Next Replicated Node ID" value="3" />
 	<attribute name="Next Replicated Component ID" value="9" />
-	<attribute name="Next Local Node ID" value="16777324" />
-	<attribute name="Next Local Component ID" value="16778044" />
+	<attribute name="Next Local Node ID" value="16777325" />
+	<attribute name="Next Local Component ID" value="16778056" />
 	<attribute name="Variables" />
 	<attribute name="Variable Names" value="powerup" />
 	<component type="Octree" id="1" />
@@ -232,7 +232,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="-30.0103 4.5 -130.003" />
+			<attribute name="Position" value="-181.01 4.5 -11.003" />
 			<attribute name="Rotation" value="1 -0.000109908 2.56527e-08 0.000827703" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -250,11 +250,9 @@
 			</component>
 			<component type="RigidBody" id="16777786">
 				<attribute name="Physics Rotation" value="1 -0.000110029 2.56669e-08 0.000828479" />
-				<attribute name="Physics Position" value="-15.0051 2.25 -70.5016" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="-0.000455636 0 6.79807e-05" />
-				<attribute name="Angular Velocity" value="-2.02802e-05 -9.43159e-11 0.000130182" />
+				<attribute name="Physics Position" value="-90.5051 2.25 -11.0015" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777289">
@@ -263,7 +261,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="-5.01466 4.5 -17.4987" />
+			<attribute name="Position" value="138.985 4.5 -337.499" />
 			<attribute name="Rotation" value="0.999999 0.000125581 1.32835e-08 0.00123788" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -281,11 +279,9 @@
 			</component>
 			<component type="RigidBody" id="16777789">
 				<attribute name="Physics Rotation" value="0.999999 0.000125692 1.32949e-08 0.00123906" />
-				<attribute name="Physics Position" value="-2.50733 2.25 -14.2493" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="-0.000688543 4.29153e-06 -6.42275e-05" />
-				<attribute name="Angular Velocity" value="1.86107e-05 2.45971e-10 0.000196727" />
+				<attribute name="Physics Position" value="69.4927 2.25 -174.249" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777291">
@@ -294,7 +290,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="84.971 4.5 26.4849" />
+			<attribute name="Position" value="-171.029 4.5 -271.515" />
 			<attribute name="Rotation" value="0.999997 -0.00095986 6.10818e-09 0.0021438" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -308,15 +304,13 @@
 			<component type="CollisionShape" id="16777794">
 				<attribute name="Shape Type" value="Sphere" />
 				<attribute name="Model" value="Model;Models/NinjaSnowWar/Potion.mdl" />
-				<attribute name="Collision Margin" value="0.01" />
+				<attribute name="Collision Margin" value="0" />
 			</component>
 			<component type="RigidBody" id="16777795">
 				<attribute name="Physics Rotation" value="0.999997 -0.000960794 6.11205e-09 0.0021459" />
-				<attribute name="Physics Position" value="42.4855 2.25 7.74245" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="-0.00123132 0 -0.000705285" />
-				<attribute name="Angular Velocity" value="-0.000156584 2.64822e-09 0.000351805" />
+				<attribute name="Physics Position" value="-85.5145 2.25 -141.258" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777292">
@@ -325,7 +319,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="-61.0213 4.5 -43.5255" />
+			<attribute name="Position" value="-17.0213 4.5 -355.526" />
 			<attribute name="Rotation" value="0.999997 -0.001821 6.3882e-08 0.0016094" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -343,11 +337,9 @@
 			</component>
 			<component type="RigidBody" id="16777798">
 				<attribute name="Physics Rotation" value="0.999997 -0.00182288 6.39318e-08 0.00161104" />
-				<attribute name="Physics Position" value="-30.5107 2.25 -27.2628" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="-0.000963887 5.72205e-06 -0.00123248" />
-				<attribute name="Angular Velocity" value="-0.000314733 3.3022e-09 0.000275396" />
+				<attribute name="Physics Position" value="-8.51065 2.25 -183.263" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777293">
@@ -356,7 +348,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="-22.5094 4.5 149.979" />
+			<attribute name="Position" value="152.491 4.5 149.979" />
 			<attribute name="Rotation" value="0.999998 -0.00157645 5.57688e-08 0.000858309" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -374,11 +366,9 @@
 			</component>
 			<component type="RigidBody" id="16777801">
 				<attribute name="Physics Rotation" value="0.999998 -0.00157801 5.58398e-08 0.000859113" />
-				<attribute name="Physics Position" value="-11.2547 2.25 69.4896" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="-0.000472417 5.72205e-06 -0.00108026" />
-				<attribute name="Angular Velocity" value="-0.000261227 4.63107e-10 0.000134976" />
+				<attribute name="Physics Position" value="76.2453 2.25 69.4895" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777294">
@@ -387,7 +377,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="93.4987 4.5 -50.0322" />
+			<attribute name="Position" value="204.499 4.5 -235.032" />
 			<attribute name="Rotation" value="0.999998 -0.00212689 2.08181e-07 -8.477e-06" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -405,11 +395,9 @@
 			</component>
 			<component type="RigidBody" id="16777804">
 				<attribute name="Physics Rotation" value="0.999998 -0.00212906 2.0829e-07 -8.52488e-06" />
-				<attribute name="Physics Position" value="46.7494 2.25 -30.5161" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="2.81151e-05 -1.432e-05 -0.00143185" />
-				<attribute name="Angular Velocity" value="-0.000365468 4.34751e-09 -8.0329e-06" />
+				<attribute name="Physics Position" value="102.249 2.25 -123.016" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777295">
@@ -418,7 +406,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="101.014 4.5 -118.524" />
+			<attribute name="Position" value="-45.986 4.5 -374.524" />
 			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -436,11 +424,9 @@
 			</component>
 			<component type="RigidBody" id="16777807">
 				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
-				<attribute name="Physics Position" value="50.507 2.25 -64.7619" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
-				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Physics Position" value="-22.993 2.25 -192.762" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777296">
@@ -449,7 +435,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="12.5093 4.5 -129.015" />
+			<attribute name="Position" value="-190.491 4.5 169.985" />
 			<attribute name="Rotation" value="0.999999 -0.00107913 2.51943e-08 -0.000522963" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -467,11 +453,9 @@
 			</component>
 			<component type="RigidBody" id="16777810">
 				<attribute name="Physics Rotation" value="0.999999 -0.0010802 2.5087e-08 -0.000523391" />
-				<attribute name="Physics Position" value="6.25465 2.25 -70.0075" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="0.000251175 2.87592e-06 -0.000855458" />
-				<attribute name="Angular Velocity" value="-0.000178889 -1.88941e-09 -7.17644e-05" />
+				<attribute name="Physics Position" value="-95.2453 2.25 79.4925" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777314">
@@ -499,10 +483,8 @@
 			<component type="RigidBody" id="16778007">
 				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
 				<attribute name="Physics Position" value="-15.493 2.25 196.738" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
-				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777315">
@@ -511,7 +493,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="157.014 4.5 350.476" />
+			<attribute name="Position" value="-197.986 -23.5 302.476" />
 			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -529,11 +511,9 @@
 			</component>
 			<component type="RigidBody" id="16778010">
 				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
-				<attribute name="Physics Position" value="78.507 2.25 169.738" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
-				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Physics Position" value="-98.993 -11.75 145.738" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777316">
@@ -542,7 +522,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="101.014 4.5 318.476" />
+			<attribute name="Position" value="-186.986 4.5 123.476" />
 			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -560,11 +540,9 @@
 			</component>
 			<component type="RigidBody" id="16778013">
 				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
-				<attribute name="Physics Position" value="50.507 2.25 153.738" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
-				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Physics Position" value="-93.493 2.25 56.238" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777317">
@@ -592,10 +570,8 @@
 			<component type="RigidBody" id="16778016">
 				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
 				<attribute name="Physics Position" value="-124.493 2.25 44.738" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
-				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777318">
@@ -604,7 +580,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="46.014 4.5 -199.524" />
+			<attribute name="Position" value="-130.986 4.5 291.476" />
 			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -622,11 +598,9 @@
 			</component>
 			<component type="RigidBody" id="16778019">
 				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
-				<attribute name="Physics Position" value="23.007 2.25 -105.262" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
-				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Physics Position" value="-65.493 2.25 140.238" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777319">
@@ -635,7 +609,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="57.014 4.5 -140.524" />
+			<attribute name="Position" value="182.014 4.5 -75.524" />
 			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -653,11 +627,9 @@
 			</component>
 			<component type="RigidBody" id="16778022">
 				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
-				<attribute name="Physics Position" value="28.507 2.25 -75.762" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
-				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Physics Position" value="91.007 2.25 -43.262" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777320">
@@ -666,7 +638,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="147.014 4.5 -282.524" />
+			<attribute name="Position" value="46.014 4.5 -386.524" />
 			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -684,11 +656,9 @@
 			</component>
 			<component type="RigidBody" id="16778025">
 				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
-				<attribute name="Physics Position" value="73.507 2.25 -146.762" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
-				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Physics Position" value="23.007 2.25 -198.762" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777321">
@@ -697,7 +667,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="181.014 4.5 -125.524" />
+			<attribute name="Position" value="-165.986 4.5 -151.524" />
 			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -715,11 +685,9 @@
 			</component>
 			<component type="RigidBody" id="16778028">
 				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
-				<attribute name="Physics Position" value="90.507 2.25 -68.262" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
-				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Physics Position" value="-82.993 2.25 -81.262" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 		<node id="16777322">
@@ -728,7 +696,7 @@
 			<attribute name="Tags">
 				<string value="PowerUp" />
 			</attribute>
-			<attribute name="Position" value="161.014 4.5 103.476" />
+			<attribute name="Position" value="-105.986 4.5 -328.524" />
 			<attribute name="Rotation" value="0.999998 -0.0019983 3.05195e-07 -0.000913758" />
 			<attribute name="Scale" value="7 7 7" />
 			<attribute name="Variables">
@@ -746,11 +714,9 @@
 			</component>
 			<component type="RigidBody" id="16778031">
 				<attribute name="Physics Rotation" value="0.999998 -0.00200011 3.05514e-07 -0.000914728" />
-				<attribute name="Physics Position" value="80.507 2.25 46.238" />
-				<attribute name="Mass" value="0.1" />
-				<attribute name="Linear Velocity" value="0.000569963 2.86102e-06 -0.00119891" />
-				<attribute name="Angular Velocity" value="-0.000302361 4.37127e-09 -0.000162847" />
+				<attribute name="Physics Position" value="-52.993 2.25 -169.762" />
 				<attribute name="Linear Rest Threshold" value="0" />
+				<attribute name="Is Trigger" value="true" />
 			</component>
 		</node>
 	</node>
