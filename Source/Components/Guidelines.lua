@@ -63,7 +63,6 @@ function DidPlayerFinish(counter)
 end
 
 
---this needs to be changed
 function DidCrossedFinishLine(point)
     local crossed = false
     local lastPoint = checkpoints[#checkpoints - 1].point

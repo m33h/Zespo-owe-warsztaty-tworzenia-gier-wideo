@@ -214,6 +214,7 @@ function HandlePostUpdate(eventType, eventData)
 
     local speed = vehicle.hullBody.linearVelocity:Length()
     UpdateSpeedMeter(speed)
+    UpdateGuidelineBox()
 
     counter = counter + 1
 
@@ -305,7 +306,7 @@ end
 function CreateGuidelineBox()
     guideline = Text:new()
 
-    guideline.text = "100, 200 -> 100, 200"
+    guideline.text = ""
     guideline:SetFont(cache:GetResource("Font", "Fonts/Anonymous Pro.ttf"), 42)
     guideline.color = Color.RED
 
@@ -316,6 +317,26 @@ function CreateGuidelineBox()
     guideline:SetPosition(pos_X, pos_Y)
 
     ui.root:AddChild(guideline)
+end
+
+function UpdateGuidelineBox()
+    nearestCheckpoint = GetActiveCheckpoint(0).point
+    local nextCheckpoint = GetActiveCheckpoint( 1).point
+    checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
+    cos = vectorsCos(checkpointsVector, vehicleNode.direction)
+
+    if cos < 0 then
+        turnInfo = 'TURN AROUND'
+    else
+        turnInfo = ''
+    end
+
+    guideline.text = turnInfo
+    local offset_X = 20
+    local offset_Y = 100
+    local pos_X = ui.root:GetWidth() - guideline:GetWidth() - offset_X
+    local pos_Y = ui.root:GetHeight() - guideline:GetHeight() - offset_Y
+    guideline:SetPosition(pos_X, pos_Y)
 end
 
 function UpdatePowerupsUi()
