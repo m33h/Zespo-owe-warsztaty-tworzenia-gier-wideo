@@ -291,7 +291,7 @@ function CreatePowerupsUi()
 
     powerupsCountText = Text:new()
     powerupsCountText:SetFont(cache:GetResource("Font", "Fonts/Anonymous Pro.ttf"), 42)
-    powerupsCountText.color = Color.WHITE
+    powerupsCountText.color = Color.BLACK
     powerupsCountText:SetPosition(ammoTextPosX, ammoTextPosY)
 
     ui.root:AddChild(powerupsCountText)
