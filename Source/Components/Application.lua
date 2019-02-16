@@ -320,23 +320,25 @@ function CreateGuidelineBox()
 end
 
 function UpdateGuidelineBox()
-    nearestCheckpoint = GetActiveCheckpoint(0).point
-    local nextCheckpoint = GetActiveCheckpoint( 1).point
-    checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
-    cos = vectorsCos(checkpointsVector, vehicleNode.direction)
+    if(GAME_STATE == 'PLAY_GAME') then
+        nearestCheckpoint = GetActiveCheckpoint(0).point
+        local nextCheckpoint = GetActiveCheckpoint( 1).point
+        checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
+        cos = vectorsCos(checkpointsVector, vehicleNode.direction)
 
-    if cos < 0 then
-        turnInfo = 'TURN AROUND'
-    else
-        turnInfo = ''
+        if cos < 0 then
+            turnInfo = 'TURN AROUND'
+        else
+            turnInfo = ''
+        end
+
+        guideline.text = turnInfo
+        local offset_X = 20
+        local offset_Y = 100
+        local pos_X = ui.root:GetWidth() - guideline:GetWidth() - offset_X
+        local pos_Y = ui.root:GetHeight() - guideline:GetHeight() - offset_Y
+        guideline:SetPosition(pos_X, pos_Y)
     end
-
-    guideline.text = turnInfo
-    local offset_X = 20
-    local offset_Y = 100
-    local pos_X = ui.root:GetWidth() - guideline:GetWidth() - offset_X
-    local pos_Y = ui.root:GetHeight() - guideline:GetHeight() - offset_Y
-    guideline:SetPosition(pos_X, pos_Y)
 end
 
 function UpdatePowerupsUi()
