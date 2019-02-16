@@ -194,7 +194,7 @@ function HandlePostUpdate(eventType, eventData)
         return
     end
 
-    if((vehicleNode.position - GetActiveCheckpoint(0).point):Length() < 10) then
+    if((vehicleNode.position - GetActiveCheckpoint(0).point):Length() < 10 and GAME_STATE == 'PLAY_GAME') then
         vehicle.guildlines_points = vehicle.guildlines_points + 1
         GetActiveCheckpoint(1).flagNode:SetEnabled(true)
         GetActiveCheckpoint(0).flagNode:SetEnabled(false)
