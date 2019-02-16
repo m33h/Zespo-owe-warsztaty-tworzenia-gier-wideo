@@ -159,9 +159,11 @@ function Vehicle:FixedUpdate(timeStep)
     if self.controls:IsDown(CTRL_BACK) then
         accelerator = -0.5
     end
-
     if input:GetMouseButtonPress(MOUSEB_LEFT) then
-        Vehicle:Fire(self.node, self.node:GetScene())
+        print(GAME_STATE)
+        if GAME_STATE == "PLAY_GAME" then
+            Vehicle:Fire(self.node, self.node:GetScene())
+        end
     end
 
     -- When steering, wake up the wheel rigidbodies so that their orientation is updated
@@ -198,7 +200,7 @@ function Vehicle:Fire(currentNode, scene)
     local vehicleNode = currentNode
 
     local bulletNode = scene:CreateChild("Bullet");
-    bulletNode.position = vehicleNode.position + vehicleNode.direction * 2
+    bulletNode.position = vehicleNode.position + vehicleNode.direction * 3
     bulletNode.direction = vehicleNode.direction
 
     local bulletStaticModel = bulletNode:CreateComponent("StaticModel")
@@ -207,12 +209,12 @@ function Vehicle:Fire(currentNode, scene)
     bulletStaticModel.castShadows = true;
 
     local bulletRigidBody = bulletNode:CreateComponent("RigidBody")
-    bulletRigidBody.mass = 2.8
-    bulletRigidBody.friction = 0.75
+    bulletRigidBody.mass = 3.0
+    bulletRigidBody.friction = 1.0
 
     local collisionShape = bulletNode:CreateComponent("CollisionShape")
-    collisionShape:SetBox(Vector3(1.2, 1.2, 1.2))
+    collisionShape:SetBox(Vector3(2, 2, 2))
 
-    local OBJECT_VELOCITY = 250.0
-    bulletRigidBody.linearVelocity = vehicleNode.rotation * Vector3(0.0, 0.015, 1) * OBJECT_VELOCITY
+    local OBJECT_VELOCITY = 280.0
+    bulletRigidBody.linearVelocity = vehicleNode.rotation * Vector3(0.0, 0.008, 1) * OBJECT_VELOCITY
 end
