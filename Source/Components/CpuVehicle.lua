@@ -123,16 +123,21 @@ end
 function CpuVehicle:FixedUpdate(timeStep)
 
     if ((GAME_STATE == "PLAY_GAME" or GAME_STATE == "WIN_STATE") and not self.finished) then
-        if (DidCrossedFinishLine(self.node.position)) then
+
+        local nearestCheckpoint = GetNearestCheckpoint(self.node.position, 0).point
+
+--    checks if nearest point is last position
+        if(nearestCheckpoint == checkpoints[#checkpoints - 1].point) then
             RegisterTime("CPU_"..self.cpu_index)
             self.finished = true
             return
         end
-        local nearestCheckpoint = GetNearestCheckpoint(self.node.position, 0).point
+    
         local nextCheckpoint = GetNearestCheckpoint(self.node.position, 1).point
         checkpointsVector = (nextCheckpoint - nearestCheckpoint):Normalized()
         cos = vectorsCos(checkpointsVector, self.node.direction)
         sin = vectorsSin(checkpointsVector, self.node.direction)
+
 
         local newSteering = 0.0
 
